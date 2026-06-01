@@ -208,7 +208,6 @@ function calcPreco(){
   var comv=preco*(a==='c'?0.14:0.15);
   var impv=preco*0.035;
   var cfv=(a==='c'&&preco<79)?6.5:0;
-  var frv=(a==='p'&&f)?21:0;
   var sobra=preco-custo-FX-cv;
 
   var h='';
@@ -231,7 +230,7 @@ function calcPreco(){
   h+='<div style="'+bk+'"><span style="color:#888780;">Custos fixos (caixa, contador)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(FX)+'</span></div>';
   h+='<div style="'+bk+'"><span style="color:#888780;">Comissao ML ('+(a==='c'?'14':'15')+'%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(comv)+'</span></div>';
   if(cfv>0) h+='<div style="'+bk+'"><span style="color:#888780;">Taxa fixa ML (abaixo R$ 79)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(cfv)+'</span></div>';
-  if(frv>0) h+='<div style="'+bk+'"><span style="color:#888780;">Frete gratis (50% por conta sua)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(frv)+'</span></div>';
+
   h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid #F1EFE8;"><span style="color:#888780;">Imposto Simples (3,5%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(impv)+'</span></div>';
   var freteVal = (a==='p') ? fretePremium(preco) : 0;
   var freteLbl, freteMsg, freteCor;
