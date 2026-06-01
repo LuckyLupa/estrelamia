@@ -73,7 +73,7 @@ input[type=radio]{display:none;}
         <span style="font-size:14px;">Anuncio</span>
         <div class="tog">
           <label class="tlb" id="lac" for="ac">Classico 14%</label>
-          <label class="tlb" id="lap" for="ap">Premium 19%</label>
+          <label class="tlb" id="lap" for="ap">Premium 15%</label>
         </div>
       </div>
       <div class="trow">
@@ -165,27 +165,39 @@ function brl(v){
 }
 function getA(){return document.getElementById('ap').checked?'p':'c';}
 function getF(){return document.getElementById('fs').checked?1:0;}
+
 function cvar(p,a,f){
-  return p*(a==='c'?0.14:0.19)+p*0.035+(p<79?6.5:0)+(f&&p>=79?17:0);
+  // Classico: 14%, Premium: 15%
+  var comissao = p * (a==='c' ? 0.14 : 0.15);
+  var imp = p * 0.035;
+  // Frete: Classico sem frete gratis = comprador paga (nao desconta do seller apos R$79)
+  // Premium com frete gratis = seller paga ~50% do frete (media R$21)
+  var frete = (a==='p' && f) ? 21 : 0;
+  // Taxa fixa ML para precos abaixo de R$79 no Classico
+  var cf = (a==='c' && p < 79) ? 6.50 : 0;
+  return comissao + imp + frete + cf;
 }
+
 function pAlvo(custo,ld,a,f){
-  var FX=17.36,p=custo+FX+ld;
+  var FX=17.36, p=custo+FX+ld;
   for(var i=0;i<40;i++) p=custo+FX+cvar(p,a,f)+ld;
   return Math.ceil(p*100)/100;
 }
+
 function calcPreco(){
   var custo=parseFloat(document.getElementById('custo').value)||0;
   var lucro=parseFloat(document.getElementById('lucro').value)||0;
   if(!custo){alert('Digite o custo da peca primeiro.');return;}
-  var a=getA(),f=getF(),FX=17.36;
+  var a=getA(), f=getF(), FX=17.36;
   var pmin=pAlvo(custo,0,a,f);
   var preco=lucro>0?pAlvo(custo,lucro,a,f):pmin;
   var cv=cvar(preco,a,f);
-  var mlv=preco*(a==='c'?0.14:0.19);
+  var comv=preco*(a==='c'?0.14:0.15);
   var impv=preco*0.035;
-  var cfv=preco<79?6.5:0;
-  var frv=f&&preco>=79?17:0;
+  var cfv=(a==='c'&&preco<79)?6.5:0;
+  var frv=(a==='p'&&f)?21:0;
   var sobra=preco-custo-FX-cv;
+
   var h='';
   if(lucro>0){
     h+='<div style="text-align:center;background:#EEEDFE;border-radius:12px;padding:1.25rem;margin-bottom:12px;">';
@@ -204,9 +216,9 @@ function calcPreco(){
   var bk='display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid #F1EFE8;';
   h+='<div style="'+bk+'"><span style="color:#888780;">Custo da peca</span><span style="font-weight:500;color:#A32D2D;">- '+brl(custo)+'</span></div>';
   h+='<div style="'+bk+'"><span style="color:#888780;">Custos fixos (caixa, contador)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(FX)+'</span></div>';
-  h+='<div style="'+bk+'"><span style="color:#888780;">Comissao ML ('+(a==='c'?'14':'19')+'%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(mlv)+'</span></div>';
+  h+='<div style="'+bk+'"><span style="color:#888780;">Comissao ML ('+(a==='c'?'14':'15')+'%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(comv)+'</span></div>';
   if(cfv>0) h+='<div style="'+bk+'"><span style="color:#888780;">Taxa fixa ML (abaixo R$ 79)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(cfv)+'</span></div>';
-  if(frv>0) h+='<div style="'+bk+'"><span style="color:#888780;">Frete subsidiado</span><span style="font-weight:500;color:#A32D2D;">- '+brl(frv)+'</span></div>';
+  if(frv>0) h+='<div style="'+bk+'"><span style="color:#888780;">Frete gratis (50% por conta sua)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(frv)+'</span></div>';
   h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;"><span style="color:#888780;">Imposto Simples (3,5%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(impv)+'</span></div>';
   var pBg=sobra<0?'#FCEBEB':sobra<10?'#FAEEDA':'#E1F5EE';
   var pC=sobra<0?'#A32D2D':sobra<10?'#BA7517':'#0F6E56';
@@ -215,6 +227,7 @@ function calcPreco(){
   document.getElementById('res-preco').innerHTML=h;
   document.getElementById('card-res').style.display='block';
 }
+
 function calcMes(){
   var r=parseFloat(document.getElementById('mr').value)||0;
   if(!r){alert('Digite o total que entrou no Mercado Livre.');return;}
@@ -232,7 +245,7 @@ function calcMes(){
   h+='<div style="background:#FAFAF8;border-radius:12px;padding:14px;border:1px solid #F1EFE8;"><div style="font-size:11px;color:#888780;margin-bottom:4px;">Entrou no ML</div><div style="font-size:20px;font-weight:700;color:#534AB7;">'+brl(r)+'</div></div>';
   h+='<div style="background:#FAFAF8;border-radius:12px;padding:14px;border:1px solid #F1EFE8;"><div style="font-size:11px;color:#888780;margin-bottom:4px;">Total de gastos</div><div style="font-size:20px;font-weight:700;color:#A32D2D;">'+brl(gastos)+'</div></div>';
   h+='</div>';
-  var sbg=pos?'#E1F5EE':'#FCEBEB',sc=pos?'#0F6E56':'#A32D2D';
+  var sbg=pos?'#E1F5EE':'#FCEBEB', sc=pos?'#0F6E56':'#A32D2D';
   h+='<div style="background:'+sbg+';border-radius:14px;padding:1.25rem;text-align:center;margin-bottom:14px;">';
   h+='<div style="font-size:13px;font-weight:500;color:'+sc+';margin-bottom:6px;">'+(pos?'Sobrou no mes':'Faltou no mes')+'</div>';
   h+='<div style="font-size:42px;font-weight:700;color:'+sc+';line-height:1;">'+brl(sobra)+'</div>';
