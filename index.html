@@ -13,23 +13,24 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,'DM Sans',sans-serif;background:#FAFAF8;color:#2C2C2A;max-width:430px;margin:0 auto;}
-.header{background:#534AB7;padding:1.75rem 1.5rem;position:relative;overflow:hidden;}
+.header{background:#534AB7;padding:1.5rem 1.25rem;position:relative;overflow:hidden;}
 .header::before{content:'';position:absolute;width:220px;height:220px;border-radius:50%;border:45px solid rgba(255,255,255,0.06);top:-70px;right:-70px;}
 .hi{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1;}
-.h-title{font-size:28px;color:white;line-height:1.2;font-weight:700;margin-bottom:.4rem;}
-.h-sub{font-size:12px;color:rgba(255,255,255,0.6);}
-.h-logo{width:140px;height:140px;object-fit:contain;flex-shrink:0;opacity:.92;}
+.h-title{font-size:26px;color:white;line-height:1.2;font-weight:700;margin-bottom:.3rem;}
+.h-sub{font-size:11px;color:rgba(255,255,255,0.6);}
+.h-logo{width:120px;height:120px;object-fit:contain;flex-shrink:0;opacity:.92;}
 .content{padding:1rem 1.25rem 2rem;}
 input[type=radio]{display:none;}
 .tabs{display:flex;background:white;border-radius:14px;padding:4px;box-shadow:0 2px 12px rgba(0,0,0,0.1);margin-bottom:1.25rem;}
-.tlbl{flex:1;padding:11px 6px;text-align:center;font-size:13px;font-weight:500;color:#5F5E5A;border-radius:10px;cursor:pointer;-webkit-user-select:none;user-select:none;}
-#t1:checked~.content .tlbl1,#t2:checked~.content .tlbl2{background:#534AB7;color:white;box-shadow:0 2px 8px rgba(83,74,183,.35);}
+.tlbl{flex:1;padding:10px 4px;text-align:center;font-size:12px;font-weight:500;color:#5F5E5A;border-radius:10px;cursor:pointer;-webkit-user-select:none;}
+#t1:checked~.content .tlbl1,#t2:checked~.content .tlbl2,#t3:checked~.content .tlbl3{background:#534AB7;color:white;box-shadow:0 2px 8px rgba(83,74,183,.35);}
 .panel{display:none;}
 #t1:checked~.content #p1{display:block;}
 #t2:checked~.content #p2{display:block;}
+#t3:checked~.content #p3{display:block;}
 .tog{display:flex;background:#F1EFE8;border-radius:8px;padding:3px;gap:2px;}
-.tlb{padding:8px 12px;font-size:12px;font-weight:500;border-radius:6px;color:#5F5E5A;cursor:pointer;-webkit-user-select:none;user-select:none;}
-#ac:checked~.content #lac,#ap:checked~.content #lap,#fs:checked~.content #lfs,#fn:checked~.content #lfn{background:white;color:#534AB7;box-shadow:0 1px 4px rgba(0,0,0,.12);}
+.tlb{padding:8px 12px;font-size:12px;font-weight:500;border-radius:6px;color:#5F5E5A;cursor:pointer;-webkit-user-select:none;}
+#ac:checked~.content #lac,#ap:checked~.content #lap{background:white;color:#534AB7;box-shadow:0 1px 4px rgba(0,0,0,.12);}
 .card{background:white;border-radius:16px;padding:1.25rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);}
 .clabel{font-size:11px;font-weight:500;color:#5F5E5A;text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;}
 .trow{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
@@ -41,8 +42,11 @@ input[type=radio]{display:none;}
 .pfx{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;color:#888780;font-weight:500;pointer-events:none;}
 .inp{width:100%;padding:11px 12px 11px 32px;font-size:16px;font-family:-apple-system,sans-serif;border:1.5px solid #D3D1C7;border-radius:10px;background:#FAFAF8;color:#2C2C2A;-webkit-appearance:none;outline:none;}
 .inp:focus{border-color:#534AB7;background:white;}
+.inp-busca{width:100%;padding:10px 12px;font-size:14px;font-family:-apple-system,sans-serif;border:1.5px solid #D3D1C7;border-radius:10px;background:#FAFAF8;color:#2C2C2A;-webkit-appearance:none;outline:none;margin-bottom:14px;}
+.inp-busca:focus{border-color:#534AB7;}
 .btn{display:block;width:100%;padding:14px;background:#534AB7;color:white;font-size:15px;font-weight:600;border:none;border-radius:12px;cursor:pointer;margin-top:14px;-webkit-appearance:none;font-family:-apple-system,sans-serif;}
 .btn:active{opacity:.85;}
+.msg-ok{display:none;background:#E1F5EE;color:#0F6E56;font-size:13px;font-weight:500;padding:8px 12px;border-radius:8px;text-align:center;margin-bottom:10px;}
 .footer{text-align:center;padding:1rem 0 .5rem;font-size:11px;color:#D3D1C7;}
 </style>
 </head>
@@ -50,14 +54,15 @@ input[type=radio]{display:none;}
 
 <input type="radio" name="aba" id="t1" checked>
 <input type="radio" name="aba" id="t2">
-<input type="radio" name="anuncio" id="ac" checked onchange="calcPreco()">
-<input type="radio" name="anuncio" id="ap" onchange="calcPreco()">
+<input type="radio" name="aba" id="t3">
+<input type="radio" name="anuncio" id="ac" checked>
+<input type="radio" name="anuncio" id="ap">
 
 <div class="header">
   <div class="hi">
     <div>
-      <div class="h-title">Quanto<br>devo cobrar?</div>
-      <div class="h-sub">Calculadora · Mercado Livre 2026</div>
+      <div class="h-title">Estrela Mia</div>
+      <div class="h-sub">Gestao de precos · Mercado Livre 2026</div>
     </div>
     <img class="h-logo" src="data:image/png;base64,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" alt="Estrela Mia">
   </div>
@@ -66,9 +71,11 @@ input[type=radio]{display:none;}
 <div class="content">
   <div class="tabs">
     <label class="tlbl tlbl1" for="t1">Preco da peca</label>
-    <label class="tlbl tlbl2" for="t2">Resultado do mes</label>
+    <label class="tlbl tlbl2" for="t2">Catalogo</label>
+    <label class="tlbl tlbl3" for="t3">Resultado do mes</label>
   </div>
 
+  <!-- ABA 1: PRECO DA PECA -->
   <div class="panel" id="p1">
     <div class="card">
       <p class="clabel">Tipo de anuncio</p>
@@ -79,7 +86,6 @@ input[type=radio]{display:none;}
           <label class="tlb" id="lap" for="ap">Premium 15%</label>
         </div>
       </div>
-
     </div>
     <div class="card">
       <p class="clabel">Custo da peca</p>
@@ -95,7 +101,7 @@ input[type=radio]{display:none;}
           <input class="inp" type="number" id="lucro" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
         </div>
       </div>
-      <button class="btn" id="btn-preco" type="button" onclick="calcPreco()">Calcular preco</button>
+      <button class="btn" id="btn-preco" type="button">Calcular preco</button>
     </div>
     <div class="card" id="card-res" style="display:none;">
       <p class="clabel">Resultado</p>
@@ -103,46 +109,57 @@ input[type=radio]{display:none;}
     </div>
   </div>
 
+  <!-- ABA 2: CATALOGO -->
   <div class="panel" id="p2">
     <div class="card">
-      <p class="clabel">Valores do mes</p>
+      <p class="clabel">Catalogo de produtos (90)</p>
+      <p style="font-size:12px;color:#888780;margin-bottom:12px;line-height:1.5;">Custos carregados da planilha fiscal do ML. Edite e salve para atualizar.</p>
+      <div id="msg-cat" class="msg-ok">Custo salvo!</div>
+      <input class="inp-busca" type="search" id="busca-cat" placeholder="Buscar produto..." oninput="renderCatalogo()">
+      <div id="lista-catalogo"></div>
+    </div>
+  </div>
+
+  <!-- ABA 3: RESULTADO DO MES -->
+  <div class="panel" id="p3">
+    <div class="card">
+      <p class="clabel">Entradas do mes</p>
       <div class="field">
         <label class="flabel">Total que entrou no Mercado Livre</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" id="mr" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+          <input class="inp" type="number" id="mr" placeholder="0,00" min="0" step="0.01" inputmode="decimal" onchange="calcMes()">
         </div>
       </div>
       <div class="field">
-        <label class="flabel">Quanto gastei comprando produtos</label>
+        <label class="flabel">Taxas do Mercado Livre (do relatorio)</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" id="mc" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+          <input class="inp" type="number" id="mt" placeholder="0,00" min="0" step="0.01" inputmode="decimal" onchange="calcMes()">
         </div>
       </div>
       <div class="field">
-        <label class="flabel">Taxas do Mercado Livre</label>
+        <label class="flabel">Imposto do mes (DAS + DARF)</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" id="mt" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
-        </div>
-      </div>
-      <div class="field">
-        <label class="flabel">Imposto (DAS + DARF)</label>
-        <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" id="mi" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+          <input class="inp" type="number" id="mi" placeholder="0,00" min="0" step="0.01" inputmode="decimal" onchange="calcMes()">
         </div>
       </div>
       <div class="field">
         <label class="flabel">Contador</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" id="mco" value="231" min="0" step="0.01" inputmode="decimal">
+          <input class="inp" type="number" id="mco" value="231" min="0" step="0.01" inputmode="decimal" onchange="calcMes()">
         </div>
       </div>
       <div class="field">
-        <label class="flabel">Embalagens e outros gastos</label>
+        <label class="flabel">Outros gastos</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" id="mo" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+          <input class="inp" type="number" id="mo" placeholder="0,00" min="0" step="0.01" inputmode="decimal" onchange="calcMes()">
         </div>
       </div>
-      <button class="btn" id="btn-mes" type="button" onclick="calcMes()">Calcular resultado</button>
+    </div>
+    <div class="card">
+      <p class="clabel">Produtos vendidos no mes</p>
+      <p style="font-size:12px;color:#888780;margin-bottom:12px;">Informe a quantidade vendida de cada produto.</p>
+      <div id="lista-produtos-mes"></div>
+      <button class="btn" id="btn-mes" type="button" style="margin-top:14px;">Calcular resultado</button>
     </div>
     <div class="card" id="card-mes" style="display:none;">
       <p class="clabel">Resultado do mes</p>
@@ -154,38 +171,40 @@ input[type=radio]{display:none;}
 </div>
 
 <script>
+var CATALOGO = [{"nome": "Anel Bolas Em Prata 925 Com Esferas Polidas Prateado 18", "tipo": "unico", "custo": 41.9, "componentes": [{"nome": "Anel Bolas Em Prata 925 Com Esferas Polidas Prateado 18", "custo": 41.9}], "preco_venda": 0}, {"nome": "Anel Bolas Em Prata 925 Com Esferas Polidas Prateado 20", "tipo": "unico", "custo": 41.9, "componentes": [{"nome": "Anel Bolas Em Prata 925 Com Esferas Polidas Prateado 20", "custo": 41.9}], "preco_venda": 0}, {"nome": "Anel Borboleta Em Prata 925 Feminino Delicado Ajustável Prateado Ajustável", "tipo": "unico", "custo": 56.7, "componentes": [{"nome": "Anel Borboleta Em Prata 925 Feminino Delicado Ajustável Prateado Ajustável", "custo": 56.7}], "preco_venda": 0}, {"nome": "Anel Cauda De Sereia Pérola Natural Prata 925 Prateado Ajustável", "tipo": "unico", "custo": 107.9, "componentes": [{"nome": "Anel Cauda De Sereia Pérola Natural Prata 925 Prateado Ajustável", "custo": 107.9}], "preco_venda": 0}, {"nome": "Anel Cavalo Marinho Prata 925 Ajustável Prateado Ajustável", "tipo": "unico", "custo": 80.9, "componentes": [{"nome": "Anel Cavalo Marinho Prata 925 Ajustável Prateado Ajustável", "custo": 80.9}], "preco_venda": 0}, {"nome": "Anel Circulo Da Vida Com Zircônia Prata 925 Prateado 19", "tipo": "unico", "custo": 58.9, "componentes": [{"nome": "Anel Circulo Da Vida Com Zircônia Prata 925 Prateado 19", "custo": 58.9}], "preco_venda": 0}, {"nome": "Anel Circulo Da Vida Com Zircônia Prata 925 Prateado 20", "tipo": "unico", "custo": 58.9, "componentes": [{"nome": "Anel Circulo Da Vida Com Zircônia Prata 925 Prateado 20", "custo": 58.9}], "preco_venda": 0}, {"nome": "Anel Coração Minimalista Ajustável Prata 925 Prateado Ajustável", "tipo": "unico", "custo": 0, "componentes": [], "preco_venda": 0}, {"nome": "Anel Feminino Prata 925 Com Zircônias Cravejadas Elegância Prateado Ajustável", "tipo": "unico", "custo": 35.4, "componentes": [{"nome": "Anel Feminino Prata 925 Com Zircônias Cravejadas Elegância Prateado Ajustável", "custo": 35.4}], "preco_venda": 0}, {"nome": "Anel Gota Cristal Prata 925 Rubi Rose Ajustável", "tipo": "unico", "custo": 0, "componentes": [], "preco_venda": 0}, {"nome": "Anel Haste Prata Branca 925 Prateado Ajustável", "tipo": "unico", "custo": 0, "componentes": [], "preco_venda": 0}, {"nome": "Anel Interligado Ajustável Liso Prata 925 Prateado Ajustável", "tipo": "unico", "custo": 102.78, "componentes": [{"nome": "Anel Interligado Ajustável Liso Prata 925 Prateado Ajustável", "custo": 102.78}], "preco_venda": 0}, {"nome": "Anel Midinho Lua E Sol Ajustável Prata 925 Prateado Ajustável", "tipo": "unico", "custo": 97.3, "componentes": [{"nome": "Anel Midinho Lua E Sol Ajustável Prata 925 Prateado Ajustável", "custo": 97.3}], "preco_venda": 0}, {"nome": "Anel Mindinho Abaulado Liso Prata 925 Prateado Ajustável", "tipo": "unico", "custo": 0, "componentes": [], "preco_venda": 0}, {"nome": "Anel Peixe Sardinha Ajustável Prata 925 Prateado Ajustável", "tipo": "unico", "custo": 74.9, "componentes": [{"nome": "Anel Peixe Sardinha Ajustável Prata 925 Prateado Ajustável", "custo": 74.9}], "preco_venda": 0}, {"nome": "Anel Santa Rita De Cássia Prata 925 Regulável Feminino Prateado Ajustável", "tipo": "unico", "custo": 49.9, "componentes": [{"nome": "Anel Santa Rita De Cássia Prata 925 Regulável Feminino Prateado Ajustável", "custo": 49.9}], "preco_venda": 0}, {"nome": "Bolsa Feminina De Palha Pequena Formato Quadrado Palha Zigue Zague Metal Palha Natural", "tipo": "unico", "custo": 30.0, "componentes": [{"nome": "Bolsa Feminina De Palha Pequena Formato Quadrado Palha Zigue Zague Metal Palha Natural", "custo": 30.0}], "preco_venda": 0}, {"nome": "Brinco Argola Cauda De Sereia Prata 925 Prateado", "tipo": "unico", "custo": 68.3, "componentes": [{"nome": "Brinco Argola Cauda De Sereia Prata 925 Prateado", "custo": 68.3}], "preco_venda": 0}, {"nome": "Brinco Argola Concha Prata 925 Feminino Delicado Prateado", "tipo": "unico", "custo": 96.9, "componentes": [{"nome": "Brinco Argola Concha Prata 925 Feminino Delicado Prateado", "custo": 96.9}], "preco_venda": 0}, {"nome": "Brinco Argola Estrela Polar Em Prata 925 Com Zircônia Prateado", "tipo": "kit", "custo": 116.98, "componentes": [{"nome": "Brinco Argola Estrela Polar Em Prata 925", "custo": 106.99, "qtd": 1.0}, {"nome": "Brinco Ponto de Luz Prata 925", "custo": 9.99, "qtd": 1.0}], "preco_venda": 189.99}, {"nome": "Brinco Argola Polvo Pérola Natural Prata 925 Prateado", "tipo": "unico", "custo": 63.6, "componentes": [{"nome": "Brinco Argola Polvo Pérola Natural Prata 925 Prateado", "custo": 63.6}], "preco_venda": 0}, {"nome": "Brinco Argola Serpente Prata 925 Com Micro Zicôrnias Prateado", "tipo": "unico", "custo": 113.0, "componentes": [{"nome": "Brinco Argola Serpente Prata 925 Com Micro Zicôrnias Prateado", "custo": 113.0}], "preco_venda": 0}, {"nome": "Brinco Crisoprasio Pedra Natural Prata 925 Verde", "tipo": "unico", "custo": 58.8, "componentes": [{"nome": "Brinco Crisoprasio Pedra Natural Prata 925 Verde", "custo": 58.8}], "preco_venda": 0}, {"nome": "Brinco Feminino Lua E Estrela Vazado Prata 925 Estrela Mia Prateado", "tipo": "kit", "custo": 64.4, "componentes": [{"nome": "Brinco Lua Cravejado Prata 925", "custo": 16.9, "qtd": 1.0}, {"nome": "Ear Cuff Estrela Cravejada Prata 925", "custo": 47.5, "qtd": 1.0}], "preco_venda": 148.99}, {"nome": "Brinco Meia Argola Olho Grego Prata 925 Com Micro Zircônias Prateado", "tipo": "unico", "custo": 54.0, "componentes": [{"nome": "Brinco Meia Argola Olho Grego Prata 925 Com Micro Zircônias Prateado", "custo": 54.0}], "preco_venda": 0}, {"nome": "Colar Amuletos De Proteção Prata 925 Místico Lua Estrela Prateado", "tipo": "kit", "custo": 175.9, "componentes": [{"nome": "Corrente Rabo de Rato 45cm", "custo": 50.0, "qtd": 1.0}, {"nome": "Pingente Amuleto De Proteção Prata 925 Místico Lua Estrela", "custo": 125.9, "qtd": 1.0}], "preco_venda": 306.23}, {"nome": "Colar Choker Aro Torcido Em Prata 925 Prateado", "tipo": "unico", "custo": 99.5, "componentes": [{"nome": "Colar Choker Aro Torcido Em Prata 925 Prateado", "custo": 99.5}], "preco_venda": 0}, {"nome": "Colar Choker Fio De Nylon Pérolas Biwa Prata 925 Prateado", "tipo": "unico", "custo": 29.9, "componentes": [{"nome": "Colar Choker Fio De Nylon Pérolas Biwa Prata 925 Prateado", "custo": 29.9}], "preco_venda": 0}, {"nome": "Colar Choker Pérola De Água Doce Estrela Do Mar Prata 925 Perolado", "tipo": "kit", "custo": 110.1, "componentes": [{"nome": "Colar Choker Pérola Shell", "custo": 58.7, "qtd": 1.0}, {"nome": "Pingente Estrela Do Mar Prata 925", "custo": 51.4, "qtd": 1.0}], "preco_venda": 258.99}, {"nome": "Colar Choker Pérolas E  Pingente Sol Concha Prata 925 Perolado", "tipo": "kit", "custo": 81.6, "componentes": [{"nome": "Pingente Sol Concha Prata 925", "custo": 22.9, "qtd": 1.0}, {"nome": "Colar Choker Pérolas Shell", "custo": 58.7, "qtd": 1.0}], "preco_venda": 182.61}, {"nome": "Colar Citrino Pedra Natural Com Pérolas Biwa Prata 925 Amarelo", "tipo": "unico", "custo": 92.4, "componentes": [{"nome": "Colar Citrino Pedra Natural Com Pérolas Biwa Prata 925 Amarelo", "custo": 92.4}], "preco_venda": 0}, {"nome": "Colar Cobra 60cm Prata 925 Prateado", "tipo": "kit", "custo": 0.0, "componentes": [{"nome": "CORRENTE VENEZ 60CM PRATA 925", "custo": 0, "qtd": 1.0}, {"nome": "PINGENTE COBRA PRATA 925", "custo": 0, "qtd": 1.0}], "preco_venda": 163.19}, {"nome": "Colar Cobra Serpente Prata 925 Prateado", "tipo": "kit", "custo": 0.0, "componentes": [{"nome": "Corrente Venez 45cm Prata 925", "custo": 0, "qtd": 1.0}, {"nome": "Pingente Cobra Serpente Prata 925", "custo": 0, "qtd": 1.0}], "preco_venda": 152.63}, {"nome": "Colar Coração De Corredora Em Prata 925 Com Micro Zircônias Prateado", "tipo": "kit", "custo": 35.0, "componentes": [{"nome": "Corrente Malha Veneziana 45 cm", "custo": 35.0, "qtd": 1.0}, {"nome": "Pingente Coração Corredora", "custo": 0, "qtd": 1.0}], "preco_venda": 208.99}, {"nome": "Colar Corrente Pipoca Pingente Onça Prata 925 Prateado", "tipo": "kit", "custo": 115.4, "componentes": [{"nome": "Corrente Pipoca Prata 925", "custo": 67.9, "qtd": 1.0}, {"nome": "Pingente Onça Prata 925 Prateado", "custo": 47.5, "qtd": 1.0}], "preco_venda": 298.99}, {"nome": "Colar Cristo Redentor Banhado Ouro 18k Dourado", "tipo": "unico", "custo": 24.0, "componentes": [{"nome": "Colar Cristo Redentor Banhado Ouro 18k Dourado", "custo": 24.0}], "preco_venda": 0}, {"nome": "Colar Cristo Redentor Prata 925 Corrente 45cm Pingente Relig Prateado", "tipo": "kit", "custo": 0.0, "componentes": [{"nome": "Corrente Venez 45cm Prata 925", "custo": 0, "qtd": 1.0}, {"nome": "Pingente Cristo Prata 925", "custo": 0, "qtd": 1.0}], "preco_venda": 158.99}, {"nome": "Colar Cápsula Ametista Pedra Natural Prata 925", "tipo": "kit", "custo": 0.0, "componentes": [{"nome": "Corrente Venez 60cm Prata 925", "custo": 0, "qtd": 1.0}, {"nome": "Pingente Capsula Ametista Prata 925", "custo": 0, "qtd": 1.0}], "preco_venda": 115.4}, {"nome": "Colar De Turmalina Da Melancia Pingente Flor Prata 925 Prateado", "tipo": "kit", "custo": 98.0, "componentes": [{"nome": "Colar Turmalina da Melancia Pedra Natural", "custo": 66.5, "qtd": 1.0}, {"nome": "Pingente Flor Quartzo Rosa Prata 925", "custo": 31.5, "qtd": 1.0}], "preco_venda": 201.07}, {"nome": "Colar Envelope Carta Do Amor Em Prata 925 Prateado", "tipo": "kit", "custo": 163.6, "componentes": [{"nome": "Corrente Malha Veneziana 45 cm Prata 925", "custo": 32.0, "qtd": 1.0}, {"nome": "Pingente Envelope Carta Do Amor Em Prata 925", "custo": 131.6, "qtd": 1.0}], "preco_venda": 289.99}, {"nome": "Colar Espelho De Iemanjá Com Pérola De Água Doce Prata 925 Prateado", "tipo": "kit", "custo": 65.4, "componentes": [{"nome": "Corrente Veneziana 40cm Prata 925", "custo": 16.0, "qtd": 1.0}, {"nome": "Pingente Espelho De Iemanjá", "custo": 49.4, "qtd": 1.0}], "preco_venda": 189.99}, {"nome": "Colar Fio De Nylon Margarida Madrepérola Amarelo", "tipo": "unico", "custo": 15.3, "componentes": [{"nome": "Colar Fio De Nylon Margarida Madrepérola Amarelo", "custo": 15.3}], "preco_venda": 0}, {"nome": "Colar Fio De Nylon Margarida Madrepérola Azul-celeste", "tipo": "unico", "custo": 15.3, "componentes": [{"nome": "Colar Fio De Nylon Margarida Madrepérola Azul-celeste", "custo": 15.3}], "preco_venda": 0}, {"nome": "Colar Fio De Nylon Margarida Madrepérola Vermelho", "tipo": "unico", "custo": 15.3, "componentes": [{"nome": "Colar Fio De Nylon Margarida Madrepérola Vermelho", "custo": 15.3}], "preco_venda": 0}, {"nome": "Colar Gargantilha Borboleta Fio Nylon Prata 925 Prateado", "tipo": "unico", "custo": 30.64, "componentes": [{"nome": "Colar Gargantilha Borboleta Fio Nylon Prata 925 Prateado", "custo": 30.64}], "preco_venda": 0}, {"nome": "Colar Gargantilha Coração Madrepérola Prata 925 Prateado", "tipo": "unico", "custo": 0, "componentes": [], "preco_venda": 0}, {"nome": "Colar Gargantilha Divino Espírito Santo Prata 925 Prateado", "tipo": "unico", "custo": 0, "componentes": [], "preco_venda": 0}, {"nome": "Colar Gargantilha Filho Menino Madrepérola Prata 925 Prateado", "tipo": "unico", "custo": 0, "componentes": [], "preco_venda": 0}, {"nome": "Colar Gargantilha Flor Do Campo Prata 925 Prateado", "tipo": "unico", "custo": 0, "componentes": [], "preco_venda": 0}, {"nome": "Colar Gargantilha Flor Rosa Fio Nylon Madrepérola Madrepérola", "tipo": "unico", "custo": 21.5, "componentes": [{"nome": "Colar Gargantilha Flor Rosa Fio Nylon Madrepérola Madrepérola", "custo": 21.5}], "preco_venda": 0}, {"nome": "Colar Gargantilha Menino Menina Fio Nylon Prata 925 Prateado", "tipo": "kit", "custo": 0.0, "componentes": [{"nome": "Gargantilha Menino Fio Nylon Prata 925", "custo": 0, "qtd": 1.0}, {"nome": "Gargantilha Menina Fio Nylon Prata 925", "custo": 0, "qtd": 1.0}], "preco_venda": 78.99}, {"nome": "Colar Iemanjá Madrepérola Fio De Nylon Invisível Madrepérola", "tipo": "unico", "custo": 20.4, "componentes": [{"nome": "Colar Iemanjá Madrepérola Fio De Nylon Invisível Madrepérola", "custo": 20.4}], "preco_venda": 0}, {"nome": "Colar Medalha Santo Antônio Prata 925 Prateado", "tipo": "kit", "custo": 0.0, "componentes": [{"nome": "Corrente Malha Venez 50CM Prata 925", "custo": 0, "qtd": 1.0}, {"nome": "Pingente Medalha Santo Antonio Prata 925", "custo": 0, "qtd": 1.0}], "preco_venda": 152.63}, {"nome": "Colar Mãe De Menina Com Zircônia Coração Prata 925 Prateado", "tipo": "kit", "custo": 101.8, "componentes": [{"nome": "Corrente Malha Veneziana 45 cm Prata 925", "custo": 32.0, "qtd": 1.0}, {"nome": "Pingente Menina Com Zircônia Coração Prata 925", "custo": 69.8, "qtd": 1.0}], "preco_venda": 218.99}, {"nome": "Colar Mãe De Menino Com Zircônia Prata 925 Prateado", "tipo": "kit", "custo": 94.9, "componentes": [{"nome": "Corrente Malha Veneziana 45 cm Prata 925", "custo": 32.0, "qtd": 1.0}, {"nome": "Pingente Menino Com Zircônia Prata 925", "custo": 62.9, "qtd": 1.0}], "preco_venda": 208.99}, {"nome": "Colar Olho Grego Madrepérola Prata 925 Prateado", "tipo": "kit", "custo": 0.0, "componentes": [{"nome": "Pingente Olho Grego Madrepérola Prata 925", "custo": 0, "qtd": 1.0}, {"nome": "CORRENTE VENZ 50CM PRATA 925", "custo": 0, "qtd": 1.0}], "preco_venda": 145.99}, {"nome": "Colar Orixá Guerreiro Ogum Prata 925 Prateado", "tipo": "kit", "custo": 43.67, "componentes": [{"nome": "Corrente Venez 50cm Prata 925", "custo": 20.0, "qtd": 1.0}, {"nome": "Pingente Orixá Guerreiro Ogum Prata 925", "custo": 23.67, "qtd": 1.0}], "preco_venda": 189.99}, {"nome": "Colar Patuá Em Prata 925 Com Pérola Natural E Sardinha Prateado", "tipo": "kit", "custo": 68.8, "componentes": [{"nome": "Corrente Veneziana 60 cm Prata 925", "custo": 22.0, "qtd": 1.0}, {"nome": "Pingente Pérola Natural Prata 925", "custo": 22.9, "qtd": 1.0}, {"nome": "Pingente Sardinha Prata 925", "custo": 23.9, "qtd": 1.0}], "preco_venda": 189.99}, {"nome": "Colar Pedra Turquesa Africana Com Pingente Turquesa Natural Verde", "tipo": "kit", "custo": 160.9, "componentes": [{"nome": "Colar Turquesa Africana Pedra Natural", "custo": 61.4, "qtd": 1.0}, {"nome": "Pingente De Turquesa Natural Prata 925", "custo": 99.5, "qtd": 1.0}], "preco_venda": 278.73}, {"nome": "Colar Peixe Sardinha Prata 925 Prateado", "tipo": "kit", "custo": 48.9, "componentes": [{"nome": "Corrente Venez 50cm Prata 925", "custo": 25.0, "qtd": 1.0}, {"nome": "Peixe Sardinha Prata 925", "custo": 23.9, "qtd": 1.0}], "preco_venda": 158.99}, {"nome": "Colar Pipoca São Francisco De Assis Religioso Prata 925 Prateado", "tipo": "kit", "custo": 77.18, "componentes": [{"nome": "Corrente Pipoca 45 cm Prata 925", "custo": 55.9, "qtd": 1.0}, {"nome": "Pingente São Francisco De Assis Prata 925", "custo": 21.28, "qtd": 1.0}], "preco_venda": 171.83}, {"nome": "Colar Religioso Patuá Fé Em Prata 925 Prateado", "tipo": "kit", "custo": 120.88, "componentes": [{"nome": "Corrente Veneziana Malha 60 cm Prata 925", "custo": 45.0, "qtd": 1.0}, {"nome": "Pingente Cruz Prata 925", "custo": 18.7, "qtd": 1.0}, {"nome": "Pingente Família Prata 925", "custo": 19.5, "qtd": 1.0}, {"nome": "Pingente Fé Prata 925", "custo": 16.4, "qtd": 1.0}, {"nome": "Pingente São Francisco de Assis Prata 925", "custo": 21.28, "qtd": 1.0}], "preco_venda": 218.99}, {"nome": "Colar Santa Rita De Cássia Prata 925 Prateado", "tipo": "kit", "custo": 41.84, "componentes": [{"nome": "Corrente Malha Venez 45cm Prata 925", "custo": 18.72, "qtd": 1.0}, {"nome": "Pingente Santa Rita de Cássia Prata 925", "custo": 23.12, "qtd": 1.0}], "preco_venda": 169.99}, {"nome": "Colar São Francisco De Assis 50cm Prata 925 Prateado", "tipo": "kit", "custo": 0.0, "componentes": [{"nome": "Corrente Venez 50cm Prata 925", "custo": 0, "qtd": 1.0}, {"nome": "Pingente São Francisco de Assis Prata 925", "custo": 0, "qtd": 1.0}], "preco_venda": 200.63}, {"nome": "Colar Tartaruga Marinha Madrepérola Prata 925 Prateado", "tipo": "kit", "custo": 60.9, "componentes": [{"nome": "Corrente Venez 45cm Prata 925", "custo": 22.0, "qtd": 1.0}, {"nome": "Pingente Tartaruga Marinha Prata 925", "custo": 38.9, "qtd": 1.0}], "preco_venda": 78.99}, {"nome": "Colar Trevo Virginia Coração 2 Em 1 Prata 925 Prateado", "tipo": "unico", "custo": 117.0, "componentes": [{"nome": "Colar Trevo Virginia Coração 2 Em 1 Prata 925 Prateado", "custo": 117.0}], "preco_venda": 0}, {"nome": "Conjunto Anel Coração Vazado Feminino Prata 925 Prateado 16", "tipo": "kit", "custo": 46.4, "componentes": [{"nome": "Anel Coração Longo Prata 925", "custo": 25.9, "qtd": 1.0}, {"nome": "Anel Coração Longo Ajustável Prata 925", "custo": 20.5, "qtd": 1.0}], "preco_venda": 128.99}, {"nome": "Conjunto Anel Coração Vazado Feminino Prata 925 Prateado 17", "tipo": "kit", "custo": 46.4, "componentes": [{"nome": "Anel Coração Longo Prata 925", "custo": 25.9, "qtd": 1.0}, {"nome": "Anel Coração Longo Ajustável Prata 925", "custo": 20.5, "qtd": 1.0}], "preco_venda": 128.99}, {"nome": "Conjunto Anel E Brinco Borboleta Delicado Feminino Prata 925 Prateado Ajustável", "tipo": "kit", "custo": 43.04, "componentes": [{"nome": "Anel Borboleta Ajustável Prata 925", "custo": 24.4, "qtd": 1.0}, {"nome": "Brinco Borboleta Prata 925", "custo": 18.64, "qtd": 1.0}], "preco_venda": 128.99}, {"nome": "Conjunto Feminino Gota Cristal Fio De Nylon Prateado", "tipo": "kit", "custo": 46.12, "componentes": [{"nome": "Brinco Gota Cristal Prata 925", "custo": 12.72, "qtd": 1.0}, {"nome": "Corrente Venez 40cm Prata", "custo": 16.9, "qtd": 1.0}, {"nome": "Pingente Gota Cristal Prata 925", "custo": 16.5, "qtd": 1.0}], "preco_venda": 78.99}, {"nome": "Conjunto Feminino Ponto De Luz Fio De Nylon Prata 925 Prateado", "tipo": "unico", "custo": 30.0, "componentes": [{"nome": "Conjunto Feminino Ponto De Luz Fio De Nylon Prata 925 Prateado", "custo": 30.0}], "preco_venda": 0}, {"nome": "Kit Anéis De Falange Prata 925 Trevo Aro Duplo Ajustável Prateado Ajustável", "tipo": "kit", "custo": 40.8, "componentes": [{"nome": "Anel Falange Trevo Prata 925", "custo": 17.9, "qtd": 1.0}, {"nome": "Anel Falange Aro Duplo Prata 925", "custo": 22.9, "qtd": 1.0}], "preco_venda": 118.99}, {"nome": "Kit Brinco Pet Ossinho E Piercing De Coração Prata 925 Prateado", "tipo": "kit", "custo": 0.0, "componentes": [{"nome": "Brinco Pet Osso Prata 925", "custo": 0, "qtd": 1.0}, {"nome": "Piercing Coração Prata 925", "custo": 0, "qtd": 1.0}], "preco_venda": 69.99}, {"nome": "Kit Brincos Bolas E Piercing De Pressão Prata 925 Prateado", "tipo": "kit", "custo": 0.0, "componentes": [{"nome": "Brinco Bola PP Prata 925", "custo": 0, "qtd": 1.0}, {"nome": "Brinco Bola P Prata 925", "custo": 0, "qtd": 1.0}, {"nome": "Brinco Encaixe Bola Prata 925", "custo": 0, "qtd": 1.0}], "preco_venda": 69.99}, {"nome": "Kit Brincos Concha Prata 925 Envelhecida Prateado", "tipo": "kit", "custo": 40.24, "componentes": [{"nome": "Brinco Concha Prata 925", "custo": 12.01, "qtd": 1.0}, {"nome": "Brinco Concha Prata 925", "custo": 17.73, "qtd": 1.0}, {"nome": "Piercing Concha Prata 925", "custo": 10.5, "qtd": 1.0}], "preco_venda": 128.99}, {"nome": "Kit Brincos Ponto De Luz Brasil Prata 925 Trio Colorido Prateado", "tipo": "unico", "custo": 14.0, "componentes": [{"nome": "Kit Brincos Ponto De Luz Brasil Prata 925 Trio Colorido Prateado", "custo": 14.0}], "preco_venda": 0}, {"nome": "Kit Brincos Pérola Com Coroa Em Prata 925 Prateado", "tipo": "unico", "custo": 14.0, "componentes": [{"nome": "Kit Brincos Pérola Com Coroa Em Prata 925 Prateado", "custo": 14.0}], "preco_venda": 0}, {"nome": "Kit De Brincos Coração Prata 925 Com Argolas E Pontos De Luz Prateado", "tipo": "kit", "custo": 65.3, "componentes": [{"nome": "Kit De Brincos Coração Prata 925 Com Argolas E Pontos De Luz", "custo": 60.3, "qtd": 1.0}, {"nome": "Brinco Pontos De Luz Coração Prata 925", "custo": 5.0, "qtd": 1.0}], "preco_venda": 158.99}, {"nome": "Kit Pulseiras Braceletes Fio Quadrado Prata 925 Prateado 7.62 Cm 7 Cm", "tipo": "unico", "custo": 20.9, "componentes": [{"nome": "Kit Pulseiras Braceletes Fio Quadrado Prata 925 Prateado 7.62 Cm 7 Cm", "custo": 20.9}], "preco_venda": 0}, {"nome": "Pingente São Francisco De Assis Medalha Religiosa Prata 925 Prateado", "tipo": "kit", "custo": 0.0, "componentes": [{"nome": "Pingente São Francisco De Assis Prata 925", "custo": 0, "qtd": 3.0}], "preco_venda": 69.99}, {"nome": "Pulseira Ajustável Rosas Em Alto Relevo Em Prata 925 Prateado 6 Cm 5 Cm", "tipo": "unico", "custo": 167.9, "componentes": [{"nome": "Pulseira Ajustável Rosas Em Alto Relevo Em Prata 925 Prateado 6 Cm 5 Cm", "custo": 167.9}], "preco_venda": 0}, {"nome": "Pulseira Bracelete Oval Fio Torcido Em Prata 925 Prateado 160.02 Cm 7 Cm", "tipo": "unico", "custo": 28.9, "componentes": [{"nome": "Pulseira Bracelete Oval Fio Torcido Em Prata 925 Prateado 160.02 Cm 7 Cm", "custo": 28.9}], "preco_venda": 0}, {"nome": "Pulseira Bracelete Pingente Espírito Santo Prata 925 Prateado 5.5 Cm 7 Cm", "tipo": "kit", "custo": 45.7, "componentes": [{"nome": "Bracelete Oval Prata 925", "custo": 25.0, "qtd": 1.0}, {"nome": "Pingente Espírito Santo Prata 925", "custo": 20.7, "qtd": 1.0}], "preco_venda": 129.99}, {"nome": "Pulseira Bracelete Religioso Nossa Senhora Prata 925 Prateado 5 Cm 6.5 Cm", "tipo": "kit", "custo": 48.9, "componentes": [{"nome": "Bracelete Oval Prata 925", "custo": 25.0, "qtd": 1.0}, {"nome": "Pingente Nossa Senhora Aparecida Prata 925", "custo": 23.9, "qtd": 1.0}], "preco_venda": 138.99}, {"nome": "Pulseira Bracelete Religioso São Francisco Assis Prata 925 Prateado 5 Cm 6.5 Cm", "tipo": "kit", "custo": 75.0, "componentes": [{"nome": "Bracelete Oval Prata 925", "custo": 25.0, "qtd": 1.0}, {"nome": "Pingente São Francisco De Assis Prata 925", "custo": 50.0, "qtd": 1.0}], "preco_venda": 138.99}, {"nome": "Pulseira Delicada Feminina Coração Vazado Prata 925 Prateado 16 Cm", "tipo": "kit", "custo": 55.4, "componentes": [{"nome": "Anel Coração Vazado Prata 925", "custo": 20.5, "qtd": 1.0}, {"nome": "Pulseira Coração Vazado Prata 925", "custo": 34.9, "qtd": 1.0}], "preco_venda": 118.99}, {"nome": "Pulseira Pérola Naturais De Água Doce Perolado 18 Cm", "tipo": "unico", "custo": 72.9, "componentes": [{"nome": "Pulseira Pérola Naturais De Água Doce Perolado 18 Cm", "custo": 72.9}], "preco_venda": 0}, {"nome": "Pulseira Pérolas Naturais E Fio Invisível Em Prata 925 Perolado 7 Cm", "tipo": "unico", "custo": 34.5, "componentes": [{"nome": "Pulseira Pérolas Naturais E Fio Invisível Em Prata 925 Perolado 7 Cm", "custo": 34.5}], "preco_venda": 0}, {"nome": "Pulseira Terço Fio Cordone 10 Nós Ajustável Vermelho 7 Cm", "tipo": "unico", "custo": 11.99, "componentes": [{"nome": "Pulseira Terço Fio Cordone 10 Nós Ajustável Vermelho 7 Cm", "custo": 11.99}], "preco_venda": 0}, {"nome": "Tornozeleira Bolinhas Prata 925 8 Cm 24 Cm", "tipo": "unico", "custo": 0, "componentes": [], "preco_venda": 0}];
+var TOKEN_GH = '';
+var USER_GH = 'LuckyLupa';
+var REPO_GH = 'estrelamia';
+
 function brl(v){
   var n=Math.abs(v);
   var s=n.toFixed(2).split('.');
   s[0]=s[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');
   return 'R$\u00a0'+s[0]+','+s[1];
 }
+
+// ── ABA CONTROLE ──────────────────────────────────────────────────────
 function getA(){return document.getElementById('ap').checked?'p':'c';}
-function getF(){return 1;}
 
 function fretePremium(p){
-  // Tabela de frete Premium com reputacao verde (valores ja com desconto 50%)
-  if(p < 19)   return 5.65;
-  if(p < 49)   return 6.55;
-  if(p < 79)   return 7.75;
-  if(p < 100)  return 12.35;
-  if(p < 120)  return 14.35;
-  if(p < 150)  return 16.45;
-  if(p < 200)  return 18.45;
+  if(p<19)  return 5.65;
+  if(p<49)  return 6.55;
+  if(p<79)  return 7.75;
+  if(p<100) return 12.35;
+  if(p<120) return 14.35;
+  if(p<150) return 16.45;
+  if(p<200) return 18.45;
   return 20.95;
 }
-function cvar(p,a,f){
-  var comissao = p * (a==='c' ? 0.14 : 0.15);
-  var imp = p * 0.035;
-  // Classico: comprador paga frete, nao desconta do vendedor
-  // Premium: frete gratis obrigatorio, vendedora paga por faixa de preco
-  var frete = (a==='p') ? fretePremium(p) : 0;
-  return comissao + imp + frete;
+function cvar(p,a){
+  var comissao=p*(a==='c'?0.14:0.15);
+  var imp=p*0.035;
+  var frete=a==='p'?fretePremium(p):0;
+  return comissao+imp+frete;
 }
-
-function pAlvo(custo,ld,a,f){
-  var FX=17.36, p=custo+FX+ld;
-  for(var i=0;i<40;i++) p=custo+FX+cvar(p,a,f)+ld;
+function pAlvo(custo,ld,a){
+  var FX=17.36,p=custo+FX+ld;
+  for(var i=0;i<40;i++) p=custo+FX+cvar(p,a)+ld;
   return Math.ceil(p*100)/100;
 }
 
@@ -193,15 +212,14 @@ function calcPreco(){
   var custo=parseFloat(document.getElementById('custo').value)||0;
   var lucro=parseFloat(document.getElementById('lucro').value)||0;
   if(!custo){alert('Digite o custo da peca primeiro.');return;}
-  var a=getA(), f=getF(), FX=17.36;
-  var pmin=pAlvo(custo,0,a,f);
-  var preco=lucro>0?pAlvo(custo,lucro,a,f):pmin;
-  var cv=cvar(preco,a,f);
-  var comv=preco*(a==='c'?0.14:0.15);
+  var a=getA(),FX=17.36;
+  var pmin=pAlvo(custo,0,a);
+  var preco=lucro>0?pAlvo(custo,lucro,a):pmin;
+  var cv=cvar(preco,a);
+  var mlv=preco*(a==='c'?0.14:0.15);
   var impv=preco*0.035;
-  var cfv=(a==='c'&&preco<79)?6.5:0;
+  var frv=a==='p'?fretePremium(preco):0;
   var sobra=preco-custo-FX-cv;
-
   var h='';
   if(lucro>0){
     h+='<div style="text-align:center;background:#EEEDFE;border-radius:12px;padding:1.25rem;margin-bottom:12px;">';
@@ -219,84 +237,171 @@ function calcPreco(){
   }
   var bk='display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid #F1EFE8;';
   h+='<div style="'+bk+'"><span style="color:#888780;">Custo da peca</span><span style="font-weight:500;color:#A32D2D;">- '+brl(custo)+'</span></div>';
-  h+='<div style="'+bk+'"><span style="color:#888780;">Custos fixos (caixa, contador)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(FX)+'</span></div>';
-  h+='<div style="'+bk+'"><span style="color:#888780;">Comissao ML ('+(a==='c'?'14':'15')+'%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(comv)+'</span></div>';
-  if(cfv>0) h+='<div style="'+bk+'"><span style="color:#888780;">Taxa fixa ML (abaixo R$ 79)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(cfv)+'</span></div>';
-
-  h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid #F1EFE8;"><span style="color:#888780;">Imposto Simples (3,5%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(impv)+'</span></div>';
-  var freteVal = (a==='p') ? fretePremium(preco) : 0;
-  var freteLbl, freteMsg, freteCor;
-  if(a==='c'){
-    freteLbl = 'Frete (Classico)';
-    freteMsg = 'Pago pelo comprador';
-    freteCor = '#0F6E56';
-  } else {
-    freteLbl = 'Frete gratis (Premium) — produto R$ '+Math.floor(preco)+'-'+Math.ceil(preco);
-    freteMsg = '- '+brl(freteVal);
-    freteCor = '#A32D2D';
-  }
-  h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;"><span style="color:#888780;">'+freteLbl+'</span><span style="font-weight:500;color:'+freteCor+';">'+freteMsg+'</span></div>';
+  h+='<div style="'+bk+'"><span style="color:#888780;">Custos fixos</span><span style="font-weight:500;color:#A32D2D;">- '+brl(FX)+'</span></div>';
+  h+='<div style="'+bk+'"><span style="color:#888780;">Comissao ML ('+(a==='c'?'14':'15')+'%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(mlv)+'</span></div>';
+  if(frv>0) h+='<div style="'+bk+'"><span style="color:#888780;">Frete (Premium)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(frv)+'</span></div>';
+  if(a==='c') h+='<div style="'+bk+'"><span style="color:#888780;">Frete</span><span style="font-weight:500;color:#0F6E56;">Pago pelo comprador</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;"><span style="color:#888780;">Imposto Simples (3,5%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(impv)+'</span></div>';
   var pBg=sobra<0?'#FCEBEB':sobra<10?'#FAEEDA':'#E1F5EE';
   var pC=sobra<0?'#A32D2D':sobra<10?'#BA7517':'#0F6E56';
-  var pMsg=sobra<0?'Prejuizo - revise o preco':sobra<10?'Margem muito apertada':'Saudavel - '+Math.round(sobra/preco*100)+'% de margem liquida';
+  var pMsg=sobra<0?'Prejuizo - revise o preco':sobra<10?'Margem apertada':'Saudavel - '+Math.round(sobra/preco*100)+'% de margem';
   h+='<div style="text-align:center;padding:8px 12px;border-radius:20px;font-size:13px;font-weight:500;background:'+pBg+';color:'+pC+';margin-top:10px;">'+pMsg+'</div>';
   document.getElementById('res-preco').innerHTML=h;
   document.getElementById('card-res').style.display='block';
 }
 
-// Garantir que botoes funcionam no iOS
-document.addEventListener('DOMContentLoaded', function(){
+// ── ABA CATALOGO ──────────────────────────────────────────────────────
+var filtro = '';
+function renderCatalogo(){
+  var busca = (document.getElementById('busca-cat') ? document.getElementById('busca-cat').value : '').toLowerCase();
+  var lista = CATALOGO.filter(function(p){ return p.nome.toLowerCase().indexOf(busca) >= 0; });
+  var html = '';
+  lista.forEach(function(p, idx){
+    var realIdx = CATALOGO.indexOf(p);
+    var temCusto = p.custo > 0;
+    var corCusto = temCusto ? '#0F6E56' : '#A32D2D';
+    var custTxt = temCusto ? brl(p.custo) : 'sem custo';
+    html += '<div style="background:white;border-radius:12px;padding:1rem;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.06);">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">';
+    html += '<div style="flex:1;font-size:13px;font-weight:500;color:#2C2C2A;">'+p.nome+'</div>';
+    html += '<div style="font-size:13px;font-weight:700;color:'+corCusto+';white-space:nowrap;">'+custTxt+'</div>';
+    html += '</div>';
+    // Componentes
+    if(p.componentes && p.componentes.length > 0 && p.tipo === 'kit'){
+      html += '<div style="margin-top:8px;padding-top:8px;border-top:1px solid #F1EFE8;">';
+      p.componentes.forEach(function(c){
+        var cc = c.custo > 0 ? brl(c.custo) : '—';
+        html += '<div style="display:flex;justify-content:space-between;font-size:12px;color:#888780;padding:2px 0;">'+
+          '<span>└ '+c.nome+'</span><span>'+cc+'</span></div>';
+      });
+      html += '</div>';
+    }
+    // Editar custo
+    html += '<div style="margin-top:10px;display:flex;gap:8px;align-items:center;">';
+    html += '<input type="number" id="custo-cat-'+realIdx+'" placeholder="Novo custo" value="'+(p.custo||'')+'" step="0.01" min="0" inputmode="decimal" style="flex:1;padding:7px 10px;font-size:14px;border:1.5px solid #D3D1C7;border-radius:8px;font-family:-apple-system,sans-serif;">';
+    html += '<button onclick="salvarCusto('+realIdx+')" style="padding:7px 14px;background:#534AB7;color:white;font-size:13px;font-weight:500;border:none;border-radius:8px;cursor:pointer;font-family:-apple-system,sans-serif;">Salvar</button>';
+    html += '</div>';
+    html += '</div>';
+  });
+  if(lista.length === 0) html = '<div style="text-align:center;padding:2rem;color:#888780;">Nenhum produto encontrado</div>';
+  document.getElementById('lista-catalogo').innerHTML = html;
+}
+
+function salvarCusto(idx){
+  var novo = parseFloat(document.getElementById('custo-cat-'+idx).value)||0;
+  CATALOGO[idx].custo = novo;
+  // Recalcular custo total do kit
+  if(CATALOGO[idx].tipo === 'kit'){
+    CATALOGO[idx].componentes.forEach(function(c){ c.custo = novo / CATALOGO[idx].componentes.length; });
+  }
+  localStorage.setItem('catalogo_estrelamia', JSON.stringify(CATALOGO));
+  renderCatalogo();
+  mostrarMsg('Custo salvo!');
+}
+
+function mostrarMsg(txt){
+  var el = document.getElementById('msg-cat');
+  el.textContent = txt;
+  el.style.display = 'block';
+  setTimeout(function(){ el.style.display='none'; }, 2000);
+}
+
+// ── ABA RESULTADO DO MES ──────────────────────────────────────────────
+function renderProdutosMes(){
+  var html = '';
+  CATALOGO.forEach(function(p, idx){
+    html += '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #F1EFE8;">';
+    html += '<div style="flex:1;font-size:12px;color:#2C2C2A;">'+p.nome+'</div>';
+    html += '<input type="number" id="qtd-'+idx+'" placeholder="0" min="0" step="1" inputmode="numeric" onchange="calcMes()" style="width:60px;padding:6px 8px;font-size:14px;border:1.5px solid #D3D1C7;border-radius:8px;text-align:center;font-family:-apple-system,sans-serif;">';
+    html += '</div>';
+  });
+  document.getElementById('lista-produtos-mes').innerHTML = html;
+}
+
+function calcMes(){
+  var totalCusto = 0;
+  var totalVendas = 0;
+  CATALOGO.forEach(function(p, idx){
+    var qtd = parseFloat(document.getElementById('qtd-'+idx) ? document.getElementById('qtd-'+idx).value : 0)||0;
+    if(qtd > 0){
+      totalCusto += p.custo * qtd;
+      totalVendas += qtd;
+    }
+  });
+
+  var receita  = parseFloat(document.getElementById('mr').value)||0;
+  var taxas    = parseFloat(document.getElementById('mt').value)||0;
+  var imposto  = parseFloat(document.getElementById('mi').value)||0;
+  var contador = parseFloat(document.getElementById('mco').value)||0;
+  var outros   = parseFloat(document.getElementById('mo').value)||0;
+  var emb      = totalVendas * 4; // R$4 por embalagem
+
+  var gastos = totalCusto + taxas + imposto + contador + outros + emb;
+  var sobra  = receita - gastos;
+
+  if(!receita) return;
+
+  var pos = sobra >= 0;
+  var pct = receita > 0 ? Math.round(Math.abs(sobra)/receita*100) : 0;
+  var sbg = pos?'#E1F5EE':'#FCEBEB', sc=pos?'#0F6E56':'#A32D2D';
+  var bk = 'display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid #F1EFE8;';
+
+  var h = '';
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">';
+  h += '<div style="background:#FAFAF8;border-radius:12px;padding:14px;border:1px solid #F1EFE8;"><div style="font-size:11px;color:#888780;margin-bottom:4px;">Entrou no ML</div><div style="font-size:20px;font-weight:700;color:#534AB7;">'+brl(receita)+'</div></div>';
+  h += '<div style="background:#FAFAF8;border-radius:12px;padding:14px;border:1px solid #F1EFE8;"><div style="font-size:11px;color:#888780;margin-bottom:4px;">Total de gastos</div><div style="font-size:20px;font-weight:700;color:#A32D2D;">'+brl(gastos)+'</div></div>';
+  h += '</div>';
+  h += '<div style="background:'+sbg+';border-radius:14px;padding:1.25rem;text-align:center;margin-bottom:14px;">';
+  h += '<div style="font-size:13px;font-weight:500;color:'+sc+';margin-bottom:6px;">'+(pos?'Sobrou no mes':'Faltou no mes')+'</div>';
+  h += '<div style="font-size:42px;font-weight:700;color:'+sc+';line-height:1;">'+brl(sobra)+'</div>';
+  h += '<div style="font-size:12px;color:'+sc+';margin-top:6px;">'+(pos?pct+'% do faturamento ficou com voce':'Os gastos superaram o faturamento')+'</div>';
+  h += '</div>';
+  if(totalCusto>0) h+='<div style="'+bk+'"><span style="color:#888780;">Custo dos produtos vendidos</span><span style="font-weight:500;color:#A32D2D;">- '+brl(totalCusto)+'</span></div>';
+  if(emb>0)        h+='<div style="'+bk+'"><span style="color:#888780;">Embalagens ('+totalVendas+' vendas x R$ 4)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(emb)+'</span></div>';
+  if(taxas>0)      h+='<div style="'+bk+'"><span style="color:#888780;">Taxas do ML</span><span style="font-weight:500;color:#A32D2D;">- '+brl(taxas)+'</span></div>';
+  if(imposto>0)    h+='<div style="'+bk+'"><span style="color:#888780;">Imposto</span><span style="font-weight:500;color:#A32D2D;">- '+brl(imposto)+'</span></div>';
+  if(contador>0)   h+='<div style="'+bk+'"><span style="color:#888780;">Contador</span><span style="font-weight:500;color:#A32D2D;">- '+brl(contador)+'</span></div>';
+  if(outros>0)     h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;"><span style="color:#888780;">Outros gastos</span><span style="font-weight:500;color:#A32D2D;">- '+brl(outros)+'</span></div>';
+
+  document.getElementById('res-mes').innerHTML = h;
+  document.getElementById('card-mes').style.display = 'block';
+}
+
+// Carregar catalogo salvo no localStorage
+window.addEventListener('DOMContentLoaded', function(){
+  var salvo = localStorage.getItem('catalogo_estrelamia');
+  if(salvo){
+    try{
+      var dados = JSON.parse(salvo);
+      // Mesclar custos salvos com catálogo atual
+      dados.forEach(function(s){
+        var p = CATALOGO.find(function(x){ return x.nome === s.nome; });
+        if(p && s.custo > 0) p.custo = s.custo;
+      });
+    } catch(e){}
+  }
+  renderCatalogo();
+  renderProdutosMes();
+
+  // Listeners botoes
   var btnP = document.getElementById('btn-preco');
   var btnM = document.getElementById('btn-mes');
   if(btnP){
-    btnP.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); calcPreco(); });
-    btnP.addEventListener('touchend', function(e){ e.preventDefault(); e.stopPropagation(); calcPreco(); });
+    btnP.addEventListener('click', function(e){ e.preventDefault(); calcPreco(); });
+    btnP.addEventListener('touchend', function(e){ e.preventDefault(); calcPreco(); });
   }
   if(btnM){
-    btnM.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); calcMes(); });
-    btnM.addEventListener('touchend', function(e){ e.preventDefault(); e.stopPropagation(); calcMes(); });
+    btnM.addEventListener('click', function(e){ e.preventDefault(); calcMes(); });
+    btnM.addEventListener('touchend', function(e){ e.preventDefault(); calcMes(); });
   }
-  // Radios
-  ['ac','ap','fs','fn'].forEach(function(id){
+  ['ac','ap'].forEach(function(id){
     var el = document.getElementById(id);
-    if(el) el.addEventListener('change', function(){ 
+    if(el) el.addEventListener('change', function(){
       var cr = document.getElementById('card-res');
-      if(cr && cr.style.display !== 'none') calcPreco(); 
+      if(cr && cr.style.display !== 'none') calcPreco();
     });
   });
 });
-
-function calcMes(){
-  var r=parseFloat(document.getElementById('mr').value)||0;
-  if(!r){alert('Digite o total que entrou no Mercado Livre.');return;}
-  var c=parseFloat(document.getElementById('mc').value)||0;
-  var t=parseFloat(document.getElementById('mt').value)||0;
-  var i=parseFloat(document.getElementById('mi').value)||0;
-  var co=parseFloat(document.getElementById('mco').value)||0;
-  var o=parseFloat(document.getElementById('mo').value)||0;
-  var gastos=c+t+i+co+o;
-  var sobra=r-gastos;
-  var pos=sobra>=0;
-  var pct=Math.round(Math.abs(sobra)/r*100);
-  var h='';
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">';
-  h+='<div style="background:#FAFAF8;border-radius:12px;padding:14px;border:1px solid #F1EFE8;"><div style="font-size:11px;color:#888780;margin-bottom:4px;">Entrou no ML</div><div style="font-size:20px;font-weight:700;color:#534AB7;">'+brl(r)+'</div></div>';
-  h+='<div style="background:#FAFAF8;border-radius:12px;padding:14px;border:1px solid #F1EFE8;"><div style="font-size:11px;color:#888780;margin-bottom:4px;">Total de gastos</div><div style="font-size:20px;font-weight:700;color:#A32D2D;">'+brl(gastos)+'</div></div>';
-  h+='</div>';
-  var sbg=pos?'#E1F5EE':'#FCEBEB', sc=pos?'#0F6E56':'#A32D2D';
-  h+='<div style="background:'+sbg+';border-radius:14px;padding:1.25rem;text-align:center;margin-bottom:14px;">';
-  h+='<div style="font-size:13px;font-weight:500;color:'+sc+';margin-bottom:6px;">'+(pos?'Sobrou no mes':'Faltou no mes')+'</div>';
-  h+='<div style="font-size:42px;font-weight:700;color:'+sc+';line-height:1;">'+brl(sobra)+'</div>';
-  h+='<div style="font-size:12px;color:'+sc+';margin-top:6px;">'+(pos?pct+'% do faturamento ficou com voce':'Os gastos ultrapassaram o faturamento')+'</div></div>';
-  var bk='display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid #F1EFE8;';
-  if(c>0)  h+='<div style="'+bk+'"><span style="color:#888780;">Produtos comprados</span><span style="font-weight:500;color:#A32D2D;">- '+brl(c)+'</span></div>';
-  if(t>0)  h+='<div style="'+bk+'"><span style="color:#888780;">Taxas do ML</span><span style="font-weight:500;color:#A32D2D;">- '+brl(t)+'</span></div>';
-  if(i>0)  h+='<div style="'+bk+'"><span style="color:#888780;">Imposto</span><span style="font-weight:500;color:#A32D2D;">- '+brl(i)+'</span></div>';
-  if(co>0) h+='<div style="'+bk+'"><span style="color:#888780;">Contador</span><span style="font-weight:500;color:#A32D2D;">- '+brl(co)+'</span></div>';
-  if(o>0)  h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;"><span style="color:#888780;">Outros gastos</span><span style="font-weight:500;color:#A32D2D;">- '+brl(o)+'</span></div>';
-  document.getElementById('res-mes').innerHTML=h;
-  document.getElementById('card-mes').style.display='block';
-}
 </script>
 </body>
 </html>
