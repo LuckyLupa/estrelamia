@@ -171,16 +171,24 @@ function brl(v){
 function getA(){return document.getElementById('ap').checked?'p':'c';}
 function getF(){return document.getElementById('fs').checked?1:0;}
 
+function fretePremium(p){
+  // Tabela de frete Premium com reputacao verde (valores ja com desconto 50%)
+  if(p < 19)   return 5.65;
+  if(p < 49)   return 6.55;
+  if(p < 79)   return 7.75;
+  if(p < 100)  return 12.35;
+  if(p < 120)  return 14.35;
+  if(p < 150)  return 16.45;
+  if(p < 200)  return 18.45;
+  return 20.95;
+}
 function cvar(p,a,f){
-  // Classico: 14%, Premium: 15%
   var comissao = p * (a==='c' ? 0.14 : 0.15);
   var imp = p * 0.035;
-  // Frete: Classico sem frete gratis = comprador paga (nao desconta do seller apos R$79)
-  // Premium com frete gratis = seller paga ~50% do frete (media R$21)
-  var frete = (a==='p' && f) ? 21 : 0;
-  // Taxa fixa ML para precos abaixo de R$79 no Classico
-  var cf = (a==='c' && p < 79) ? 6.50 : 0;
-  return comissao + imp + frete + cf;
+  // Classico: comprador paga frete, nao desconta do vendedor
+  // Premium: frete gratis obrigatorio, vendedora paga por faixa de preco
+  var frete = (a==='p') ? fretePremium(p) : 0;
+  return comissao + imp + frete;
 }
 
 function pAlvo(custo,ld,a,f){
@@ -224,7 +232,11 @@ function calcPreco(){
   h+='<div style="'+bk+'"><span style="color:#888780;">Comissao ML ('+(a==='c'?'14':'15')+'%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(comv)+'</span></div>';
   if(cfv>0) h+='<div style="'+bk+'"><span style="color:#888780;">Taxa fixa ML (abaixo R$ 79)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(cfv)+'</span></div>';
   if(frv>0) h+='<div style="'+bk+'"><span style="color:#888780;">Frete gratis (50% por conta sua)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(frv)+'</span></div>';
-  h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;"><span style="color:#888780;">Imposto Simples (3,5%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(impv)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid #F1EFE8;"><span style="color:#888780;">Imposto Simples (3,5%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(impv)+'</span></div>';
+  var freteVal = (a==='p') ? fretePremium(preco) : 0;
+  var freteMsg = (a==='c') ? 'Pago pelo comprador' : '- '+brl(freteVal);
+  var freteCor = (a==='c') ? '#0F6E56' : '#A32D2D';
+  h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;"><span style="color:#888780;">Frete gratis (Premium)</span><span style="font-weight:500;color:'+freteCor+';">'+freteMsg+'</span></div>';
   var pBg=sobra<0?'#FCEBEB':sobra<10?'#FAEEDA':'#E1F5EE';
   var pC=sobra<0?'#A32D2D':sobra<10?'#BA7517':'#0F6E56';
   var pMsg=sobra<0?'Prejuizo - revise o preco':sobra<10?'Margem muito apertada':'Saudavel - '+Math.round(sobra/preco*100)+'% de margem liquida';
