@@ -50,10 +50,10 @@ input[type=radio]{display:none;}
 
 <input type="radio" name="aba" id="t1" checked>
 <input type="radio" name="aba" id="t2">
-<input type="radio" name="anuncio" id="ac" checked>
-<input type="radio" name="anuncio" id="ap">
-<input type="radio" name="frete" id="fs" checked>
-<input type="radio" name="frete" id="fn">
+<input type="radio" name="anuncio" id="ac" checked onchange="calcPreco()">
+<input type="radio" name="anuncio" id="ap" onchange="calcPreco()">
+<input type="radio" name="frete" id="fs" checked onchange="calcPreco()">
+<input type="radio" name="frete" id="fn" onchange="calcPreco()">
 
 <div class="header">
   <div class="hi">
@@ -103,7 +103,7 @@ input[type=radio]{display:none;}
           <input class="inp" type="number" id="lucro" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
         </div>
       </div>
-      <button class="btn" type="button" onclick="calcPreco()">Calcular preco</button>
+      <button class="btn" id="btn-preco" type="button" onclick="calcPreco()">Calcular preco</button>
     </div>
     <div class="card" id="card-res" style="display:none;">
       <p class="clabel">Resultado</p>
@@ -150,7 +150,7 @@ input[type=radio]{display:none;}
           <input class="inp" type="number" id="mo" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
         </div>
       </div>
-      <button class="btn" type="button" onclick="calcMes()">Calcular resultado</button>
+      <button class="btn" id="btn-mes" type="button" onclick="calcMes()">Calcular resultado</button>
     </div>
     <div class="card" id="card-mes" style="display:none;">
       <p class="clabel">Resultado do mes</p>
@@ -251,6 +251,28 @@ function calcPreco(){
   document.getElementById('res-preco').innerHTML=h;
   document.getElementById('card-res').style.display='block';
 }
+
+// Garantir que botoes funcionam no iOS
+document.addEventListener('DOMContentLoaded', function(){
+  var btnP = document.getElementById('btn-preco');
+  var btnM = document.getElementById('btn-mes');
+  if(btnP){
+    btnP.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); calcPreco(); });
+    btnP.addEventListener('touchend', function(e){ e.preventDefault(); e.stopPropagation(); calcPreco(); });
+  }
+  if(btnM){
+    btnM.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); calcMes(); });
+    btnM.addEventListener('touchend', function(e){ e.preventDefault(); e.stopPropagation(); calcMes(); });
+  }
+  // Radios
+  ['ac','ap','fs','fn'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.addEventListener('change', function(){ 
+      var cr = document.getElementById('card-res');
+      if(cr && cr.style.display !== 'none') calcPreco(); 
+    });
+  });
+});
 
 function calcMes(){
   var r=parseFloat(document.getElementById('mr').value)||0;
