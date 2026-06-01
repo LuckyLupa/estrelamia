@@ -52,8 +52,6 @@ input[type=radio]{display:none;}
 <input type="radio" name="aba" id="t2">
 <input type="radio" name="anuncio" id="ac" checked onchange="calcPreco()">
 <input type="radio" name="anuncio" id="ap" onchange="calcPreco()">
-<input type="radio" name="frete" id="fs" checked onchange="calcPreco()">
-<input type="radio" name="frete" id="fn" onchange="calcPreco()">
 
 <div class="header">
   <div class="hi">
@@ -81,13 +79,7 @@ input[type=radio]{display:none;}
           <label class="tlb" id="lap" for="ap">Premium 15%</label>
         </div>
       </div>
-      <div class="trow">
-        <span style="font-size:14px;">Frete gratis no preco?</span>
-        <div class="tog">
-          <label class="tlb" id="lfs" for="fs">Sim</label>
-          <label class="tlb" id="lfn" for="fn">Nao</label>
-        </div>
-      </div>
+
     </div>
     <div class="card">
       <p class="clabel">Custo da peca</p>
@@ -169,7 +161,7 @@ function brl(v){
   return 'R$\u00a0'+s[0]+','+s[1];
 }
 function getA(){return document.getElementById('ap').checked?'p':'c';}
-function getF(){return document.getElementById('fs').checked?1:0;}
+function getF(){return 1;}
 
 function fretePremium(p){
   // Tabela de frete Premium com reputacao verde (valores ja com desconto 50%)
