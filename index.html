@@ -158,6 +158,10 @@ input[type=radio]{display:none;}
     <div class="card">
       <p class="clabel">Produtos vendidos no mes</p>
       <p style="font-size:12px;color:#888780;margin-bottom:12px;">Informe a quantidade vendida de cada produto.</p>
+      <div style="display:flex;gap:8px;margin-bottom:12px;">
+        <input class="inp-busca" type="search" id="busca-mes" placeholder="Buscar produto..." oninput="renderProdutosMes()" style="margin-bottom:0;flex:1;">
+        <button onclick="zerarQuantidades()" style="padding:10px 14px;background:#F1EFE8;color:#534AB7;font-size:13px;font-weight:500;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;font-family:-apple-system,sans-serif;">Zerar tudo</button>
+      </div>
       <div id="lista-produtos-mes"><div style="text-align:center;padding:1rem;color:#888780;">Carregando...</div></div>
       <button class="btn" id="btn-mes" type="button" style="margin-top:14px;">Calcular resultado</button>
     </div>
@@ -317,14 +321,28 @@ function mostrarMsg(txt,tipo){
 
 // ── RESULTADO DO MES ──────────────────────────────────────────────────
 function renderProdutosMes(){
+  var busca = document.getElementById('busca-mes') ? document.getElementById('busca-mes').value.toLowerCase() : '';
   var html='';
   CATALOGO.forEach(function(p,idx){
+    if(busca && p.nome.toLowerCase().indexOf(busca) < 0) return;
+    var qtdAtual = document.getElementById('qtd-'+idx) ? document.getElementById('qtd-'+idx).value : '';
     html+='<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #F1EFE8;">';
     html+='<div style="flex:1;font-size:12px;color:#2C2C2A;">'+p.nome+'</div>';
-    html+='<input type="number" id="qtd-'+idx+'" placeholder="0" min="0" step="1" inputmode="numeric" style="width:58px;padding:6px 8px;font-size:14px;border:1.5px solid #D3D1C7;border-radius:8px;text-align:center;font-family:-apple-system,sans-serif;">';
+    html+='<input type="number" id="qtd-'+idx+'" placeholder="0" min="0" step="1" inputmode="numeric" value="'+qtdAtual+'" style="width:58px;padding:6px 8px;font-size:14px;border:1.5px solid #D3D1C7;border-radius:8px;text-align:center;font-family:-apple-system,sans-serif;">';
     html+='</div>';
   });
+  if(!html) html='<div style="text-align:center;padding:1rem;color:#888780;">Nenhum produto encontrado</div>';
   document.getElementById('lista-produtos-mes').innerHTML=html;
+}
+
+function zerarQuantidades(){
+  CATALOGO.forEach(function(p,idx){
+    var el=document.getElementById('qtd-'+idx);
+    if(el) el.value='';
+  });
+  document.getElementById('card-mes').style.display='none';
+  if(document.getElementById('busca-mes')) document.getElementById('busca-mes').value='';
+  renderProdutosMes();
 }
 
 function calcMes(){
