@@ -2,33 +2,29 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Estrela Mia</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#2C2C2A;max-width:430px;margin:0 auto;}
+body{font-family:-apple-system,BlinkMacSystemFont,'DM Sans',sans-serif;background:#FAFAF8;color:#2C2C2A;max-width:430px;margin:0 auto;}
 .header{background:#534AB7;padding:1.75rem 1.5rem;position:relative;overflow:hidden;}
 .header::before{content:'';position:absolute;width:220px;height:220px;border-radius:50%;border:45px solid rgba(255,255,255,0.06);top:-70px;right:-70px;}
 .hi{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1;}
-.h-title{font-family:'Playfair Display',serif;font-size:28px;color:white;line-height:1.2;font-weight:600;margin-bottom:.4rem;}
+.h-title{font-size:28px;color:white;line-height:1.2;font-weight:700;margin-bottom:.4rem;}
 .h-sub{font-size:12px;color:rgba(255,255,255,0.6);}
 .h-logo{width:140px;height:140px;object-fit:contain;flex-shrink:0;opacity:.92;}
 .content{padding:1rem 1.25rem 2rem;}
 input[type=radio]{display:none;}
 .tabs{display:flex;background:white;border-radius:14px;padding:4px;box-shadow:0 2px 12px rgba(0,0,0,0.1);margin-bottom:1.25rem;}
 .tlbl{flex:1;padding:11px 6px;text-align:center;font-size:13px;font-weight:500;color:#5F5E5A;border-radius:10px;cursor:pointer;-webkit-user-select:none;user-select:none;}
-#t1:checked ~ .content .tlbl1,
-#t2:checked ~ .content .tlbl2{background:#534AB7;color:white;box-shadow:0 2px 8px rgba(83,74,183,.35);}
+#t1:checked~.content .tlbl1,#t2:checked~.content .tlbl2{background:#534AB7;color:white;box-shadow:0 2px 8px rgba(83,74,183,.35);}
 .panel{display:none;}
-#t1:checked ~ .content #p1{display:block;}
-#t2:checked ~ .content #p2{display:block;}
+#t1:checked~.content #p1{display:block;}
+#t2:checked~.content #p2{display:block;}
 .tog{display:flex;background:#F1EFE8;border-radius:8px;padding:3px;gap:2px;}
 .tlb{padding:8px 12px;font-size:12px;font-weight:500;border-radius:6px;color:#5F5E5A;cursor:pointer;-webkit-user-select:none;user-select:none;}
-#ac:checked ~ .content #lac,
-#ap:checked ~ .content #lap,
-#fs:checked ~ .content #lfs,
-#fn:checked ~ .content #lfn{background:white;color:#534AB7;box-shadow:0 1px 4px rgba(0,0,0,.12);}
+#ac:checked~.content #lac,#ap:checked~.content #lap,#fs:checked~.content #lfs,#fn:checked~.content #lfn{background:white;color:#534AB7;box-shadow:0 1px 4px rgba(0,0,0,.12);}
 .card{background:white;border-radius:16px;padding:1.25rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);}
 .clabel{font-size:11px;font-weight:500;color:#5F5E5A;text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;}
 .trow{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
@@ -38,32 +34,10 @@ input[type=radio]{display:none;}
 .flabel{font-size:13px;color:#5F5E5A;margin-bottom:6px;display:block;}
 .iwrap{position:relative;}
 .pfx{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;color:#888780;font-weight:500;pointer-events:none;}
-.inp{width:100%;padding:11px 12px 11px 32px;font-size:16px;font-family:'DM Sans',sans-serif;border:1.5px solid #D3D1C7;border-radius:10px;background:#FAFAF8;color:#2C2C2A;-webkit-appearance:none;outline:none;}
+.inp{width:100%;padding:11px 12px 11px 32px;font-size:16px;font-family:-apple-system,sans-serif;border:1.5px solid #D3D1C7;border-radius:10px;background:#FAFAF8;color:#2C2C2A;-webkit-appearance:none;outline:none;}
 .inp:focus{border-color:#534AB7;background:white;}
-.formula{background:#EEEDFE;border-radius:12px;padding:1rem;margin-bottom:1rem;}
-.formula-title{font-size:13px;font-weight:500;color:#534AB7;margin-bottom:10px;}
-.formula-step{display:flex;align-items:baseline;gap:8px;font-size:13px;color:#5F5E5A;padding:5px 0;border-bottom:1px solid rgba(83,74,183,0.1);}
-.formula-step:last-child{border-bottom:none;padding-bottom:0;}
-.formula-step b{color:#2C2C2A;min-width:20px;}
-.formula-resultado{background:#534AB7;border-radius:10px;padding:12px;margin-top:10px;text-align:center;}
-.formula-resultado .lbl{font-size:11px;color:rgba(255,255,255,0.7);margin-bottom:4px;}
-.formula-resultado .val{font-family:'Playfair Display',serif;font-size:22px;color:white;font-weight:600;}
-.ref-table{width:100%;border-collapse:collapse;font-size:12px;}
-.ref-table th{background:#534AB7;color:white;padding:8px 6px;text-align:center;font-weight:500;}
-.ref-table th:first-child{text-align:left;border-radius:6px 0 0 0;}
-.ref-table th:last-child{border-radius:0 6px 0 0;}
-.ref-table td{padding:7px 6px;border-bottom:1px solid #F1EFE8;color:#5F5E5A;text-align:center;}
-.ref-table td:first-child{text-align:left;color:#2C2C2A;font-weight:500;}
-.ref-table tr:last-child td{border-bottom:none;}
-.ref-table tr:nth-child(even) td{background:#FAFAF8;}
-.verde{color:#0F6E56!important;font-weight:500!important;}
-.info{background:#E1F5EE;border-radius:10px;padding:12px;font-size:13px;color:#0F6E56;line-height:1.6;margin-bottom:12px;}
-.warning{background:#FAEEDA;border-radius:10px;padding:12px;font-size:13px;color:#BA7517;line-height:1.6;margin-bottom:12px;}
-.bk-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:13px;border-bottom:1px solid #F1EFE8;}
-.bk-row:last-child{border-bottom:none;}
-.bk-lbl{color:#888780;}
-.bk-neg{font-weight:500;color:#A32D2D;}
-.bk-pos{font-weight:500;color:#0F6E56;}
+.btn{display:block;width:100%;padding:14px;background:#534AB7;color:white;font-size:15px;font-weight:600;border:none;border-radius:12px;cursor:pointer;margin-top:14px;-webkit-appearance:none;font-family:-apple-system,sans-serif;}
+.btn:active{opacity:.85;}
 .footer{text-align:center;padding:1rem 0 .5rem;font-size:11px;color:#D3D1C7;}
 </style>
 </head>
@@ -92,9 +66,7 @@ input[type=radio]{display:none;}
     <label class="tlbl tlbl2" for="t2">Resultado do mes</label>
   </div>
 
-  <!-- PAINEL PRECO -->
   <div class="panel" id="p1">
-
     <div class="card">
       <p class="clabel">Tipo de anuncio</p>
       <div class="trow">
@@ -112,133 +84,168 @@ input[type=radio]{display:none;}
         </div>
       </div>
     </div>
-
     <div class="card">
-      <p class="clabel">Digite o custo da peca</p>
+      <p class="clabel">Custo da peca</p>
       <div class="field">
         <label class="flabel">Quanto custou a peca ou os componentes</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal" id="custo">
+          <input class="inp" type="number" id="custo" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
         </div>
       </div>
       <div class="field">
-        <label class="flabel">Quanto quer ganhar nessa peca</label>
+        <label class="flabel">Quanto quero ganhar nessa peca</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal" id="lucro">
+          <input class="inp" type="number" id="lucro" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
         </div>
       </div>
+      <button class="btn" type="button" onclick="calcPreco()">Calcular preco</button>
     </div>
-
-    <div class="card">
-      <p class="clabel">Formula para calcular na calculadora do celular</p>
-      <div class="formula">
-        <div class="formula-title">Passo a passo:</div>
-        <div class="formula-step"><b>1.</b> Custo da peca + R$ 17,36 = BASE</div>
-        <div class="formula-step"><b>2.</b> BASE + lucro desejado = TOTAL</div>
-        <div class="formula-step"><b>3.</b> Classico sem frete: TOTAL / 0,825</div>
-        <div class="formula-step"><b>3.</b> Classico com frete: TOTAL / 0,795</div>
-        <div class="formula-step"><b>3.</b> Premium com frete: TOTAL / 0,775</div>
-      </div>
-      <p style="font-size:12px;color:#888780;margin-bottom:10px;line-height:1.5;">Exemplo: peca custa R$ 45, quer ganhar R$ 30<br>
-      Base = 45 + 17,36 = 62,36<br>
-      Total = 62,36 + 30 = 92,36<br>
-      Preco = 92,36 / 0,825 = <b style="color:#534AB7;">R$ 111,95</b></p>
+    <div class="card" id="card-res" style="display:none;">
+      <p class="clabel">Resultado</p>
+      <div id="res-preco"></div>
     </div>
-
-    <div class="card">
-      <p class="clabel">Tabela de referencia rapida — Classico sem frete</p>
-      <p style="font-size:11px;color:#888780;margin-bottom:12px;line-height:1.5;">Ja inclui todos os custos fixos (R$ 17,36), comissao ML 14% e imposto 3,5%.</p>
-      <table class="ref-table">
-        <tr><th>Custo</th><th>Preco min.</th><th>+ R$20 lucro</th><th>+ R$30 lucro</th></tr>
-        <tr><td>R$ 20</td><td>R$ 45</td><td>R$ 69</td><td>R$ 81</td></tr>
-        <tr><td>R$ 30</td><td>R$ 57</td><td>R$ 81</td><td>R$ 93</td></tr>
-        <tr><td>R$ 40</td><td>R$ 69</td><td>R$ 93</td><td>R$ 105</td></tr>
-        <tr><td>R$ 45</td><td>R$ 76</td><td>R$ 100</td><td>R$ 112</td></tr>
-        <tr><td>R$ 50</td><td>R$ 82</td><td>R$ 106</td><td>R$ 118</td></tr>
-        <tr><td>R$ 60</td><td>R$ 94</td><td>R$ 118</td><td>R$ 130</td></tr>
-        <tr><td>R$ 70</td><td class="verde">R$ 106</td><td class="verde">R$ 130</td><td class="verde">R$ 142</td></tr>
-        <tr><td>R$ 80</td><td class="verde">R$ 118</td><td class="verde">R$ 142</td><td class="verde">R$ 154</td></tr>
-        <tr><td>R$ 100</td><td class="verde">R$ 142</td><td class="verde">R$ 166</td><td class="verde">R$ 178</td></tr>
-        <tr><td>R$ 120</td><td class="verde">R$ 166</td><td class="verde">R$ 190</td><td class="verde">R$ 202</td></tr>
-        <tr><td>R$ 150</td><td class="verde">R$ 203</td><td class="verde">R$ 227</td><td class="verde">R$ 239</td></tr>
-      </table>
-      <p style="font-size:11px;color:#888780;margin-top:10px;">Para Premium ou frete gratis: adicione ~6% ao preco da tabela.</p>
-    </div>
-
   </div>
 
-  <!-- PAINEL MENSAL -->
   <div class="panel" id="p2">
-
     <div class="card">
-      <p class="clabel">Digite os valores do mes</p>
+      <p class="clabel">Valores do mes</p>
       <div class="field">
         <label class="flabel">Total que entrou no Mercado Livre</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+          <input class="inp" type="number" id="mr" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
         </div>
       </div>
       <div class="field">
         <label class="flabel">Quanto gastei comprando produtos</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+          <input class="inp" type="number" id="mc" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
         </div>
       </div>
       <div class="field">
         <label class="flabel">Taxas do Mercado Livre</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+          <input class="inp" type="number" id="mt" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
         </div>
       </div>
       <div class="field">
         <label class="flabel">Imposto (DAS + DARF)</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+          <input class="inp" type="number" id="mi" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
         </div>
       </div>
       <div class="field">
         <label class="flabel">Contador</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" value="231" min="0" step="0.01" inputmode="decimal">
+          <input class="inp" type="number" id="mco" value="231" min="0" step="0.01" inputmode="decimal">
         </div>
       </div>
       <div class="field">
         <label class="flabel">Embalagens e outros gastos</label>
         <div class="iwrap"><span class="pfx">R$</span>
-          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+          <input class="inp" type="number" id="mo" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
         </div>
       </div>
-      <div style="background:#EEEDFE;border-radius:12px;padding:14px;margin-top:14px;">
-        <p style="font-size:12px;color:#534AB7;font-weight:500;margin-bottom:6px;">Para calcular o resultado:</p>
-        <p style="font-size:13px;color:#3C3489;line-height:1.6;">Some todos os gastos e subtraia do total que entrou no ML. O resultado e o que sobrou no mes.</p>
-      </div>
+      <button class="btn" type="button" onclick="calcMes()">Calcular resultado</button>
     </div>
-
-    <div class="card">
-      <p class="clabel">Historico de resultados</p>
-      <table class="ref-table">
-        <tr><th>Mes</th><th>Entrou ML</th><th>Custos ML</th><th>Liquido ML</th></tr>
-        <tr><td>Janeiro</td><td>R$ 3.778</td><td>R$ 1.208</td><td class="verde">R$ 2.570</td></tr>
-        <tr><td>Fevereiro</td><td>R$ 5.248</td><td>R$ 1.936</td><td class="verde">R$ 3.312</td></tr>
-        <tr><td>Marco</td><td>R$ 5.368</td><td>R$ 1.774</td><td class="verde">R$ 3.594</td></tr>
-        <tr><td>Abril</td><td>R$ 4.605</td><td>R$ 1.534</td><td class="verde">R$ 3.071</td></tr>
-        <tr><td>Maio</td><td>R$ 4.888</td><td>R$ 1.524</td><td class="verde">R$ 3.364</td></tr>
-      </table>
-      <p style="font-size:11px;color:#888780;margin-top:10px;line-height:1.5;">Liquido ML: apos comissoes, frete, publicidade e impostos da plataforma. Nao inclui custo dos produtos comprados.</p>
+    <div class="card" id="card-mes" style="display:none;">
+      <p class="clabel">Resultado do mes</p>
+      <div id="res-mes"></div>
     </div>
-
-    <div class="card">
-      <p class="clabel">Custos fixos mensais</p>
-      <div class="bk-row"><span class="bk-lbl">Contador</span><span class="bk-neg">R$ 231,00</span></div>
-      <div class="bk-row"><span class="bk-lbl">Imposto medio (DAS)</span><span class="bk-neg">~R$ 164,00</span></div>
-      <div class="bk-row"><span class="bk-lbl">Embalagens e insumos</span><span class="bk-neg">~R$ 140,00</span></div>
-      <div class="bk-row"><span class="bk-lbl">Publicidade (Product Ads)</span><span class="bk-neg">~R$ 103,00</span></div>
-      <div class="bk-row"><span class="bk-lbl" style="color:#2C2C2A;font-weight:500;">Total fixos por mes</span><span class="bk-neg" style="color:#534AB7;">~R$ 638,00</span></div>
-    </div>
-
   </div>
 
   <div class="footer">Estrela Mia · Mercado Livre 2026</div>
 </div>
+
+<script>
+function brl(v){
+  var n=Math.abs(v);
+  var s=n.toFixed(2).split('.');
+  s[0]=s[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  return 'R$\u00a0'+s[0]+','+s[1];
+}
+function getA(){return document.getElementById('ap').checked?'p':'c';}
+function getF(){return document.getElementById('fs').checked?1:0;}
+function cvar(p,a,f){
+  return p*(a==='c'?0.14:0.19)+p*0.035+(p<79?6.5:0)+(f&&p>=79?17:0);
+}
+function pAlvo(custo,ld,a,f){
+  var FX=17.36,p=custo+FX+ld;
+  for(var i=0;i<40;i++) p=custo+FX+cvar(p,a,f)+ld;
+  return Math.ceil(p*100)/100;
+}
+function calcPreco(){
+  var custo=parseFloat(document.getElementById('custo').value)||0;
+  var lucro=parseFloat(document.getElementById('lucro').value)||0;
+  if(!custo){alert('Digite o custo da peca primeiro.');return;}
+  var a=getA(),f=getF(),FX=17.36;
+  var pmin=pAlvo(custo,0,a,f);
+  var preco=lucro>0?pAlvo(custo,lucro,a,f):pmin;
+  var cv=cvar(preco,a,f);
+  var mlv=preco*(a==='c'?0.14:0.19);
+  var impv=preco*0.035;
+  var cfv=preco<79?6.5:0;
+  var frv=f&&preco>=79?17:0;
+  var sobra=preco-custo-FX-cv;
+  var h='';
+  if(lucro>0){
+    h+='<div style="text-align:center;background:#EEEDFE;border-radius:12px;padding:1.25rem;margin-bottom:12px;">';
+    h+='<div style="font-size:12px;color:#534AB7;font-weight:500;margin-bottom:6px;">Cobrar por essa peca</div>';
+    h+='<div style="font-size:40px;color:#534AB7;font-weight:700;line-height:1;">'+brl(preco)+'</div>';
+    h+='<div style="font-size:12px;color:#AFA9EC;margin-top:6px;">Para ganhar '+brl(lucro)+' de verdade</div></div>';
+    h+='<div style="display:flex;align-items:center;justify-content:space-between;background:#E1F5EE;border-radius:12px;padding:1rem 1.25rem;margin-bottom:14px;">';
+    h+='<span style="font-size:13px;color:#0F6E56;font-weight:500;">Entra no seu bolso</span>';
+    h+='<span style="font-size:26px;color:#0F6E56;font-weight:700;">'+brl(sobra)+'</span></div>';
+  } else {
+    h+='<div style="text-align:center;background:#EEEDFE;border-radius:12px;padding:1.25rem;margin-bottom:14px;">';
+    h+='<div style="font-size:12px;color:#534AB7;font-weight:500;margin-bottom:6px;">Preco minimo (sem lucro)</div>';
+    h+='<div style="font-size:40px;color:#534AB7;font-weight:700;line-height:1;">'+brl(pmin)+'</div>';
+    h+='<div style="font-size:12px;color:#AFA9EC;margin-top:6px;">Abaixo disso voce tem prejuizo</div></div>';
+  }
+  var bk='display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid #F1EFE8;';
+  h+='<div style="'+bk+'"><span style="color:#888780;">Custo da peca</span><span style="font-weight:500;color:#A32D2D;">- '+brl(custo)+'</span></div>';
+  h+='<div style="'+bk+'"><span style="color:#888780;">Custos fixos (caixa, contador)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(FX)+'</span></div>';
+  h+='<div style="'+bk+'"><span style="color:#888780;">Comissao ML ('+(a==='c'?'14':'19')+'%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(mlv)+'</span></div>';
+  if(cfv>0) h+='<div style="'+bk+'"><span style="color:#888780;">Taxa fixa ML (abaixo R$ 79)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(cfv)+'</span></div>';
+  if(frv>0) h+='<div style="'+bk+'"><span style="color:#888780;">Frete subsidiado</span><span style="font-weight:500;color:#A32D2D;">- '+brl(frv)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;"><span style="color:#888780;">Imposto Simples (3,5%)</span><span style="font-weight:500;color:#A32D2D;">- '+brl(impv)+'</span></div>';
+  var pBg=sobra<0?'#FCEBEB':sobra<10?'#FAEEDA':'#E1F5EE';
+  var pC=sobra<0?'#A32D2D':sobra<10?'#BA7517':'#0F6E56';
+  var pMsg=sobra<0?'Prejuizo - revise o preco':sobra<10?'Margem muito apertada':'Saudavel - '+Math.round(sobra/preco*100)+'% de margem liquida';
+  h+='<div style="text-align:center;padding:8px 12px;border-radius:20px;font-size:13px;font-weight:500;background:'+pBg+';color:'+pC+';margin-top:10px;">'+pMsg+'</div>';
+  document.getElementById('res-preco').innerHTML=h;
+  document.getElementById('card-res').style.display='block';
+}
+function calcMes(){
+  var r=parseFloat(document.getElementById('mr').value)||0;
+  if(!r){alert('Digite o total que entrou no Mercado Livre.');return;}
+  var c=parseFloat(document.getElementById('mc').value)||0;
+  var t=parseFloat(document.getElementById('mt').value)||0;
+  var i=parseFloat(document.getElementById('mi').value)||0;
+  var co=parseFloat(document.getElementById('mco').value)||0;
+  var o=parseFloat(document.getElementById('mo').value)||0;
+  var gastos=c+t+i+co+o;
+  var sobra=r-gastos;
+  var pos=sobra>=0;
+  var pct=Math.round(Math.abs(sobra)/r*100);
+  var h='';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">';
+  h+='<div style="background:#FAFAF8;border-radius:12px;padding:14px;border:1px solid #F1EFE8;"><div style="font-size:11px;color:#888780;margin-bottom:4px;">Entrou no ML</div><div style="font-size:20px;font-weight:700;color:#534AB7;">'+brl(r)+'</div></div>';
+  h+='<div style="background:#FAFAF8;border-radius:12px;padding:14px;border:1px solid #F1EFE8;"><div style="font-size:11px;color:#888780;margin-bottom:4px;">Total de gastos</div><div style="font-size:20px;font-weight:700;color:#A32D2D;">'+brl(gastos)+'</div></div>';
+  h+='</div>';
+  var sbg=pos?'#E1F5EE':'#FCEBEB',sc=pos?'#0F6E56':'#A32D2D';
+  h+='<div style="background:'+sbg+';border-radius:14px;padding:1.25rem;text-align:center;margin-bottom:14px;">';
+  h+='<div style="font-size:13px;font-weight:500;color:'+sc+';margin-bottom:6px;">'+(pos?'Sobrou no mes':'Faltou no mes')+'</div>';
+  h+='<div style="font-size:42px;font-weight:700;color:'+sc+';line-height:1;">'+brl(sobra)+'</div>';
+  h+='<div style="font-size:12px;color:'+sc+';margin-top:6px;">'+(pos?pct+'% do faturamento ficou com voce':'Os gastos ultrapassaram o faturamento')+'</div></div>';
+  var bk='display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid #F1EFE8;';
+  if(c>0)  h+='<div style="'+bk+'"><span style="color:#888780;">Produtos comprados</span><span style="font-weight:500;color:#A32D2D;">- '+brl(c)+'</span></div>';
+  if(t>0)  h+='<div style="'+bk+'"><span style="color:#888780;">Taxas do ML</span><span style="font-weight:500;color:#A32D2D;">- '+brl(t)+'</span></div>';
+  if(i>0)  h+='<div style="'+bk+'"><span style="color:#888780;">Imposto</span><span style="font-weight:500;color:#A32D2D;">- '+brl(i)+'</span></div>';
+  if(co>0) h+='<div style="'+bk+'"><span style="color:#888780;">Contador</span><span style="font-weight:500;color:#A32D2D;">- '+brl(co)+'</span></div>';
+  if(o>0)  h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;"><span style="color:#888780;">Outros gastos</span><span style="font-weight:500;color:#A32D2D;">- '+brl(o)+'</span></div>';
+  document.getElementById('res-mes').innerHTML=h;
+  document.getElementById('card-mes').style.display='block';
+}
+</script>
 </body>
 </html>
