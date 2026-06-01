@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estrela Mia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#2C2C2A;max-width:430px;margin:0 auto;}
+.header{background:#534AB7;padding:1.75rem 1.5rem;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;width:220px;height:220px;border-radius:50%;border:45px solid rgba(255,255,255,0.06);top:-70px;right:-70px;}
+.hi{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1;}
+.h-title{font-family:'Playfair Display',serif;font-size:28px;color:white;line-height:1.2;font-weight:600;margin-bottom:.4rem;}
+.h-sub{font-size:12px;color:rgba(255,255,255,0.6);}
+.h-logo{width:140px;height:140px;object-fit:contain;flex-shrink:0;opacity:.92;}
+.content{padding:1rem 1.25rem 2rem;}
+input[type=radio]{display:none;}
+.tabs{display:flex;background:white;border-radius:14px;padding:4px;box-shadow:0 2px 12px rgba(0,0,0,0.1);margin-bottom:1.25rem;}
+.tlbl{flex:1;padding:11px 6px;text-align:center;font-size:13px;font-weight:500;color:#5F5E5A;border-radius:10px;cursor:pointer;-webkit-user-select:none;user-select:none;}
+#t1:checked ~ .content .tlbl1,
+#t2:checked ~ .content .tlbl2{background:#534AB7;color:white;box-shadow:0 2px 8px rgba(83,74,183,.35);}
+.panel{display:none;}
+#t1:checked ~ .content #p1{display:block;}
+#t2:checked ~ .content #p2{display:block;}
+.tog{display:flex;background:#F1EFE8;border-radius:8px;padding:3px;gap:2px;}
+.tlb{padding:8px 12px;font-size:12px;font-weight:500;border-radius:6px;color:#5F5E5A;cursor:pointer;-webkit-user-select:none;user-select:none;}
+#ac:checked ~ .content #lac,
+#ap:checked ~ .content #lap,
+#fs:checked ~ .content #lfs,
+#fn:checked ~ .content #lfn{background:white;color:#534AB7;box-shadow:0 1px 4px rgba(0,0,0,.12);}
+.card{background:white;border-radius:16px;padding:1.25rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.clabel{font-size:11px;font-weight:500;color:#5F5E5A;text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;}
+.trow{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.trow:last-child{margin-bottom:0;}
+.field{margin-bottom:14px;}
+.field:last-child{margin-bottom:0;}
+.flabel{font-size:13px;color:#5F5E5A;margin-bottom:6px;display:block;}
+.iwrap{position:relative;}
+.pfx{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;color:#888780;font-weight:500;pointer-events:none;}
+.inp{width:100%;padding:11px 12px 11px 32px;font-size:16px;font-family:'DM Sans',sans-serif;border:1.5px solid #D3D1C7;border-radius:10px;background:#FAFAF8;color:#2C2C2A;-webkit-appearance:none;outline:none;}
+.inp:focus{border-color:#534AB7;background:white;}
+.formula{background:#EEEDFE;border-radius:12px;padding:1rem;margin-bottom:1rem;}
+.formula-title{font-size:13px;font-weight:500;color:#534AB7;margin-bottom:10px;}
+.formula-step{display:flex;align-items:baseline;gap:8px;font-size:13px;color:#5F5E5A;padding:5px 0;border-bottom:1px solid rgba(83,74,183,0.1);}
+.formula-step:last-child{border-bottom:none;padding-bottom:0;}
+.formula-step b{color:#2C2C2A;min-width:20px;}
+.formula-resultado{background:#534AB7;border-radius:10px;padding:12px;margin-top:10px;text-align:center;}
+.formula-resultado .lbl{font-size:11px;color:rgba(255,255,255,0.7);margin-bottom:4px;}
+.formula-resultado .val{font-family:'Playfair Display',serif;font-size:22px;color:white;font-weight:600;}
+.ref-table{width:100%;border-collapse:collapse;font-size:12px;}
+.ref-table th{background:#534AB7;color:white;padding:8px 6px;text-align:center;font-weight:500;}
+.ref-table th:first-child{text-align:left;border-radius:6px 0 0 0;}
+.ref-table th:last-child{border-radius:0 6px 0 0;}
+.ref-table td{padding:7px 6px;border-bottom:1px solid #F1EFE8;color:#5F5E5A;text-align:center;}
+.ref-table td:first-child{text-align:left;color:#2C2C2A;font-weight:500;}
+.ref-table tr:last-child td{border-bottom:none;}
+.ref-table tr:nth-child(even) td{background:#FAFAF8;}
+.verde{color:#0F6E56!important;font-weight:500!important;}
+.info{background:#E1F5EE;border-radius:10px;padding:12px;font-size:13px;color:#0F6E56;line-height:1.6;margin-bottom:12px;}
+.warning{background:#FAEEDA;border-radius:10px;padding:12px;font-size:13px;color:#BA7517;line-height:1.6;margin-bottom:12px;}
+.bk-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:13px;border-bottom:1px solid #F1EFE8;}
+.bk-row:last-child{border-bottom:none;}
+.bk-lbl{color:#888780;}
+.bk-neg{font-weight:500;color:#A32D2D;}
+.bk-pos{font-weight:500;color:#0F6E56;}
+.footer{text-align:center;padding:1rem 0 .5rem;font-size:11px;color:#D3D1C7;}
+</style>
+</head>
+<body>
+
+<input type="radio" name="aba" id="t1" checked>
+<input type="radio" name="aba" id="t2">
+<input type="radio" name="anuncio" id="ac" checked>
+<input type="radio" name="anuncio" id="ap">
+<input type="radio" name="frete" id="fs" checked>
+<input type="radio" name="frete" id="fn">
+
+<div class="header">
+  <div class="hi">
+    <div>
+      <div class="h-title">Quanto<br>devo cobrar?</div>
+      <div class="h-sub">Calculadora · Mercado Livre 2026</div>
+    </div>
+    <img class="h-logo" src="data:image/png;base64,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" alt="Estrela Mia">
+  </div>
+</div>
+
+<div class="content">
+  <div class="tabs">
+    <label class="tlbl tlbl1" for="t1">Preco da peca</label>
+    <label class="tlbl tlbl2" for="t2">Resultado do mes</label>
+  </div>
+
+  <!-- PAINEL PRECO -->
+  <div class="panel" id="p1">
+
+    <div class="card">
+      <p class="clabel">Tipo de anuncio</p>
+      <div class="trow">
+        <span style="font-size:14px;">Anuncio</span>
+        <div class="tog">
+          <label class="tlb" id="lac" for="ac">Classico 14%</label>
+          <label class="tlb" id="lap" for="ap">Premium 19%</label>
+        </div>
+      </div>
+      <div class="trow">
+        <span style="font-size:14px;">Frete gratis no preco?</span>
+        <div class="tog">
+          <label class="tlb" id="lfs" for="fs">Sim</label>
+          <label class="tlb" id="lfn" for="fn">Nao</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="clabel">Digite o custo da peca</p>
+      <div class="field">
+        <label class="flabel">Quanto custou a peca ou os componentes</label>
+        <div class="iwrap"><span class="pfx">R$</span>
+          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal" id="custo">
+        </div>
+      </div>
+      <div class="field">
+        <label class="flabel">Quanto quer ganhar nessa peca</label>
+        <div class="iwrap"><span class="pfx">R$</span>
+          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal" id="lucro">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="clabel">Formula para calcular na calculadora do celular</p>
+      <div class="formula">
+        <div class="formula-title">Passo a passo:</div>
+        <div class="formula-step"><b>1.</b> Custo da peca + R$ 17,36 = BASE</div>
+        <div class="formula-step"><b>2.</b> BASE + lucro desejado = TOTAL</div>
+        <div class="formula-step"><b>3.</b> Classico sem frete: TOTAL / 0,825</div>
+        <div class="formula-step"><b>3.</b> Classico com frete: TOTAL / 0,795</div>
+        <div class="formula-step"><b>3.</b> Premium com frete: TOTAL / 0,775</div>
+      </div>
+      <p style="font-size:12px;color:#888780;margin-bottom:10px;line-height:1.5;">Exemplo: peca custa R$ 45, quer ganhar R$ 30<br>
+      Base = 45 + 17,36 = 62,36<br>
+      Total = 62,36 + 30 = 92,36<br>
+      Preco = 92,36 / 0,825 = <b style="color:#534AB7;">R$ 111,95</b></p>
+    </div>
+
+    <div class="card">
+      <p class="clabel">Tabela de referencia rapida — Classico sem frete</p>
+      <p style="font-size:11px;color:#888780;margin-bottom:12px;line-height:1.5;">Ja inclui todos os custos fixos (R$ 17,36), comissao ML 14% e imposto 3,5%.</p>
+      <table class="ref-table">
+        <tr><th>Custo</th><th>Preco min.</th><th>+ R$20 lucro</th><th>+ R$30 lucro</th></tr>
+        <tr><td>R$ 20</td><td>R$ 45</td><td>R$ 69</td><td>R$ 81</td></tr>
+        <tr><td>R$ 30</td><td>R$ 57</td><td>R$ 81</td><td>R$ 93</td></tr>
+        <tr><td>R$ 40</td><td>R$ 69</td><td>R$ 93</td><td>R$ 105</td></tr>
+        <tr><td>R$ 45</td><td>R$ 76</td><td>R$ 100</td><td>R$ 112</td></tr>
+        <tr><td>R$ 50</td><td>R$ 82</td><td>R$ 106</td><td>R$ 118</td></tr>
+        <tr><td>R$ 60</td><td>R$ 94</td><td>R$ 118</td><td>R$ 130</td></tr>
+        <tr><td>R$ 70</td><td class="verde">R$ 106</td><td class="verde">R$ 130</td><td class="verde">R$ 142</td></tr>
+        <tr><td>R$ 80</td><td class="verde">R$ 118</td><td class="verde">R$ 142</td><td class="verde">R$ 154</td></tr>
+        <tr><td>R$ 100</td><td class="verde">R$ 142</td><td class="verde">R$ 166</td><td class="verde">R$ 178</td></tr>
+        <tr><td>R$ 120</td><td class="verde">R$ 166</td><td class="verde">R$ 190</td><td class="verde">R$ 202</td></tr>
+        <tr><td>R$ 150</td><td class="verde">R$ 203</td><td class="verde">R$ 227</td><td class="verde">R$ 239</td></tr>
+      </table>
+      <p style="font-size:11px;color:#888780;margin-top:10px;">Para Premium ou frete gratis: adicione ~6% ao preco da tabela.</p>
+    </div>
+
+  </div>
+
+  <!-- PAINEL MENSAL -->
+  <div class="panel" id="p2">
+
+    <div class="card">
+      <p class="clabel">Digite os valores do mes</p>
+      <div class="field">
+        <label class="flabel">Total que entrou no Mercado Livre</label>
+        <div class="iwrap"><span class="pfx">R$</span>
+          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+        </div>
+      </div>
+      <div class="field">
+        <label class="flabel">Quanto gastei comprando produtos</label>
+        <div class="iwrap"><span class="pfx">R$</span>
+          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+        </div>
+      </div>
+      <div class="field">
+        <label class="flabel">Taxas do Mercado Livre</label>
+        <div class="iwrap"><span class="pfx">R$</span>
+          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+        </div>
+      </div>
+      <div class="field">
+        <label class="flabel">Imposto (DAS + DARF)</label>
+        <div class="iwrap"><span class="pfx">R$</span>
+          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+        </div>
+      </div>
+      <div class="field">
+        <label class="flabel">Contador</label>
+        <div class="iwrap"><span class="pfx">R$</span>
+          <input class="inp" type="number" value="231" min="0" step="0.01" inputmode="decimal">
+        </div>
+      </div>
+      <div class="field">
+        <label class="flabel">Embalagens e outros gastos</label>
+        <div class="iwrap"><span class="pfx">R$</span>
+          <input class="inp" type="number" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
+        </div>
+      </div>
+      <div style="background:#EEEDFE;border-radius:12px;padding:14px;margin-top:14px;">
+        <p style="font-size:12px;color:#534AB7;font-weight:500;margin-bottom:6px;">Para calcular o resultado:</p>
+        <p style="font-size:13px;color:#3C3489;line-height:1.6;">Some todos os gastos e subtraia do total que entrou no ML. O resultado e o que sobrou no mes.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="clabel">Historico de resultados</p>
+      <table class="ref-table">
+        <tr><th>Mes</th><th>Entrou ML</th><th>Custos ML</th><th>Liquido ML</th></tr>
+        <tr><td>Janeiro</td><td>R$ 3.778</td><td>R$ 1.208</td><td class="verde">R$ 2.570</td></tr>
+        <tr><td>Fevereiro</td><td>R$ 5.248</td><td>R$ 1.936</td><td class="verde">R$ 3.312</td></tr>
+        <tr><td>Marco</td><td>R$ 5.368</td><td>R$ 1.774</td><td class="verde">R$ 3.594</td></tr>
+        <tr><td>Abril</td><td>R$ 4.605</td><td>R$ 1.534</td><td class="verde">R$ 3.071</td></tr>
+        <tr><td>Maio</td><td>R$ 4.888</td><td>R$ 1.524</td><td class="verde">R$ 3.364</td></tr>
+      </table>
+      <p style="font-size:11px;color:#888780;margin-top:10px;line-height:1.5;">Liquido ML: apos comissoes, frete, publicidade e impostos da plataforma. Nao inclui custo dos produtos comprados.</p>
+    </div>
+
+    <div class="card">
+      <p class="clabel">Custos fixos mensais</p>
+      <div class="bk-row"><span class="bk-lbl">Contador</span><span class="bk-neg">R$ 231,00</span></div>
+      <div class="bk-row"><span class="bk-lbl">Imposto medio (DAS)</span><span class="bk-neg">~R$ 164,00</span></div>
+      <div class="bk-row"><span class="bk-lbl">Embalagens e insumos</span><span class="bk-neg">~R$ 140,00</span></div>
+      <div class="bk-row"><span class="bk-lbl">Publicidade (Product Ads)</span><span class="bk-neg">~R$ 103,00</span></div>
+      <div class="bk-row"><span class="bk-lbl" style="color:#2C2C2A;font-weight:500;">Total fixos por mes</span><span class="bk-neg" style="color:#534AB7;">~R$ 638,00</span></div>
+    </div>
+
+  </div>
+
+  <div class="footer">Estrela Mia · Mercado Livre 2026</div>
+</div>
+</body>
+</html>
